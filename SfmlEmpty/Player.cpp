@@ -9,8 +9,10 @@ static sf::Vector2f gravity(0, 150);
 
 Player::Player(sf::Vector2f pos) :
 mPosition(pos){
+
 	mSprite.setTexture(Toolbox::getTexture(Toolbox::PLAYERTEXTURE));
-	mSprite.setPosition(mPosition);
+	sf::Vector2f spriteOffset(mSprite.getLocalBounds().width / 2, mSprite.getLocalBounds().height / 2);
+	mSprite.setPosition(mPosition - spriteOffset);
 }
 
 

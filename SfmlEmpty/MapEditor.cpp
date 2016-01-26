@@ -4,6 +4,7 @@
 
 MapEditor::MapEditor():
 mInsertType(BLOCK0){
+	Toolbox::loadTextures();
 }
 
 
@@ -16,8 +17,8 @@ MapEditor* MapEditor::getInstance(){
 }
 
 void MapEditor::update(sf::Event &gEvent, sf::RenderWindow &window){
-	window.setKeyRepeatEnabled(true);
-	if (gEvent.type == sf::Event::MouseButtonPressed){
+	
+	if (gEvent.type == sf::Event::MouseButtonPressed && gEvent.mouseButton.button == sf::Mouse::Left){
 		std::cout << "X pos: " << sf::Mouse::getPosition(window).x << std::endl
 			<< "Y pos: " << sf::Mouse::getPosition(window).y << std::endl;
 		int xPos = sf::Mouse::getPosition(window).x;
@@ -28,6 +29,14 @@ void MapEditor::update(sf::Event &gEvent, sf::RenderWindow &window){
 
 void MapEditor::render(sf::RenderWindow &window){
 	window.clear();
+
+	for (Terrains::size_type i = 0; i < mTerrains.size(); i++){
+		mTerrains[i]->render(window);
+	}
+
+	for (Entities::size_type i = 0; i < mEntities.size(); i++){
+		mEntities[i]->render(window);
+	}
 
 	window.display();
 }
@@ -53,7 +62,12 @@ void MapEditor::createBlock0(sf::Vector2f mousePos){
 }
 
 void MapEditor::createPlayer(sf::Vector2f mousePos){
-
+	/*for (Entities::size_type i = 0; i < mEntities.size(); i++){
+		if (mEntities[i]->getType() == Entity::PLAYER){
+			delete mEntities[i];
+			mEntities.erase[i];
+		}
+	}*/
 	mEntities.push_back(Factory::createPlayer(mousePos));
 }
 

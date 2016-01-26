@@ -1,11 +1,12 @@
 #include "GameLoop.h"
-
+#include <iostream>
 
 
 GameLoop::GameLoop():
 mCurrentMap("MMap0.txt"),
 mWindow(sf::VideoMode(640, 480), "SFML Application"){
 	mWindow.setVerticalSyncEnabled(true);
+	
 }
 
 
@@ -20,7 +21,9 @@ void GameLoop::run(){
 	shape.setRadius(80.f);
 	shape.setPosition((mWindow.getSize().x / 2) - shape.getRadius(), (mWindow.getSize().y / 2) - shape.getRadius());
 	shape.setFillColor(sf::Color::Red);
+	mWindow.setKeyRepeatEnabled(false);
 
+	
 
 	sf::Clock clock;
 
@@ -33,9 +36,9 @@ void GameLoop::run(){
 
 			if (gEvent.type == sf::Event::Closed)
 				mWindow.close();
+			update(gEvent);
 		}
-		
-		update(gEvent);
+
 		render();
 		calcTimeElapsedAndFPS(clock);
 	}

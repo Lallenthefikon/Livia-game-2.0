@@ -2,6 +2,9 @@
 #include "GameState.h"
 #include <vector>
 #include "Factory.h"
+#include "Entity.h"
+#include "Terrain.h"
+#include "Toolbox.h"
 
 class MapEditor : public GameState
 {

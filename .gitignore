@@ -1,4 +1,8 @@
+**/SFML-2.3.2
+**/Resources
+
 # Compiled Object files
+
 *.slo
 *.lo
 *.o

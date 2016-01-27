@@ -13,6 +13,7 @@ public:
 	static Entity* createWorm(sf::Vector2f pos);
 	virtual void render(sf::RenderWindow &window);
 	virtual void update();
+	virtual sf::Vector2f getPos(){ return mPosition; }
 private:
 	sf::Sprite mSprite;
 	Worm(sf::Vector2f pos);

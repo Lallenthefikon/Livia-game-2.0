@@ -3,7 +3,7 @@
 
 
 GameLoop::GameLoop():
-mCurrentMap("MMap0.txt"),
+mCurrentMap("mMap0.txt"),
 mWindow(sf::VideoMode(640, 480), "SFML Application"){
 	mWindow.setVerticalSyncEnabled(true);
 	
@@ -15,8 +15,8 @@ GameLoop::~GameLoop(){
 
 void GameLoop::run(){
 
-	//mCurrentState = GameRun::getInstance(mCurrentMap);
-	mCurrentState = MapEditor::getInstance();
+	mCurrentState = GameRun::getInstance(mCurrentMap);
+	//mCurrentState = MapEditor::getInstance(mCurrentMap);
 
 	shape.setRadius(80.f);
 	shape.setPosition((mWindow.getSize().x / 2) - shape.getRadius(), (mWindow.getSize().y / 2) - shape.getRadius());
@@ -31,21 +31,21 @@ void GameLoop::run(){
 	// Loop
 	while (mWindow.isOpen()){
 
-		sf::Event gEvent;
+		/*sf::Event gEvent;
 		while (mWindow.pollEvent(gEvent)){
 
 			if (gEvent.type == sf::Event::Closed)
 				mWindow.close();
-			update(gEvent);
-		}
-
+			
+		}*/
+		update();
 		render();
 		calcTimeElapsedAndFPS(clock);
 	}
 }
 
-void GameLoop::update(sf::Event &gEvent){
-	mCurrentState->update(gEvent, mWindow);
+void GameLoop::update(){
+	mCurrentState->update(mWindow);
 }
 
 void GameLoop::render(){

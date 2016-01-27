@@ -1,11 +1,10 @@
-﻿Build started 2016-01-26 16:42:14.
+﻿Build started 2016-01-27 16:34:26.
      1>Project "\\hsnas6\StudentHome\2014\a14alehu\Desktop\GitHub\Livia-game-2.0\SfmlEmpty\SfmlEmpty.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"\\hsnas6\StudentHome\2014\a14alehu\Desktop\GitHub\Livia-game-2.0\\SFML-2.3.2\include" /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Block0.cpp Player.cpp
-         Player.cpp
-     1>\\hsnas6\studenthome\2014\a14alehu\desktop\github\livia-game-2.0\sfmlempty\player.cpp(4): warning C4305: 'initializing' : truncation from 'double' to 'float'
-         Block0.cpp
-         Generating Code...
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"\\hsnas6\StudentHome\2014\a14alehu\Desktop\GitHub\Livia-game-2.0\\SFML-2.3.2\include" /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt GameLoop.cpp
+         GameLoop.cpp
+     1>\\hsnas6\studenthome\2014\a14alehu\desktop\github\livia-game-2.0\sfmlempty\gameloop.cpp(61): warning C4244: '=' : conversion from 'sf::Int32' to 'float', possible loss of data
+     1>\\hsnas6\studenthome\2014\a14alehu\desktop\github\livia-game-2.0\sfmlempty\gameloop.cpp(62): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"\\hsnas6\StudentHome\2014\a14alehu\Desktop\GitHub\Livia-game-2.0\Debug\SfmlEmpty.exe" /INCREMENTAL /NOLOGO /LIBPATH:"\\hsnas6\StudentHome\2014\a14alehu\Desktop\GitHub\Livia-game-2.0\\SFML-2.3.2\lib" "sfml-graphics-d.lib" "sfml-window-d.lib" "sfml-system-d.lib" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"\\hsnas6\StudentHome\2014\a14alehu\Desktop\GitHub\Livia-game-2.0\Debug\SfmlEmpty.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"\\hsnas6\StudentHome\2014\a14alehu\Desktop\GitHub\Livia-game-2.0\Debug\SfmlEmpty.lib" /MACHINE:X86 Debug\Abstractgame.obj
          Debug\Block0.obj
@@ -29,4 +28,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:05.14
+Time Elapsed 00:00:04.92

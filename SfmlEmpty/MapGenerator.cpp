@@ -19,17 +19,16 @@ MapGenerator& MapGenerator::getInstance(Terrainhandler *terrainhandler, Entityha
 
 
 // Finds all mapfiles for a given mapname, mapname must have a letter in front of it
-void MapGenerator::loadMap(std::string mapname){
+void MapGenerator::loadMap(std::string &mapname){
 
 	mapname[0] = 'T';
-	std::string terrainfilename = mapname;
-	readTerrainfile(terrainfilename);
+	MapGenerator::readTerrainfile(mapname);
 
 
 	mapname[0] = 'E';
-	std::string entityfilename = mapname;
-	readEntityfile(entityfilename);
-	mapname.pop_back();
+	MapGenerator::readEntityfile(mapname);
+
+	mapname[0] = 'm';
 
 }
 
@@ -60,6 +59,7 @@ void MapGenerator::readTerrainfile(std::string &filename){
 			}
 		}
 	}
+	terrainfile.close();
 }
 
 void MapGenerator::readEntityfile(std::string &filename){
@@ -96,6 +96,7 @@ void MapGenerator::readEntityfile(std::string &filename){
 			}
 		}
 	}
+	entityfile.close();
 }
 
 
@@ -270,7 +271,9 @@ sf::Vector2f MapGenerator::readPosition(std::string line){
 			break;
 
 		case ',':
-			ySum /= deciDivider;
+			if (deciDone)
+				ySum /= deciDivider;
+
 			yDone = true;
 			deciDone = false;
 			multiplier = 1;
@@ -278,7 +281,9 @@ sf::Vector2f MapGenerator::readPosition(std::string line){
 			break;
 
 		case '-':
-			xSum /= deciDivider;
+			if (deciDone)
+				xSum /= deciDivider;
+
 			return sf::Vector2f(xSum, ySum);
 			break;
 
@@ -286,4 +291,5 @@ sf::Vector2f MapGenerator::readPosition(std::string line){
 			break;
 		}
 	}
+	return sf::Vector2f(xSum, ySum);
 }

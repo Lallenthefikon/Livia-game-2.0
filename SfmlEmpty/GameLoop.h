@@ -15,7 +15,7 @@ public:
 	GameLoop();
 	virtual ~GameLoop();
 	void run();
-	void update(sf::Event &gEvent);
+	void update();
 	void render();
 private:
 	void calcTimeElapsedAndFPS(sf::Clock &clock);

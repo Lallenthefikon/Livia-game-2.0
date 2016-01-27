@@ -1,29 +1,67 @@
 #include "MapEditor.h"
 #include <iostream>
+#include <fstream>
+#include <sstream>
 
-
-MapEditor::MapEditor():
-mInsertType(BLOCK0){
+MapEditor::MapEditor(std::string mapName):
+mInsertType(BLOCK0),
+mMapname(mapName){
 	Toolbox::loadTextures();
 }
 
 
 MapEditor::~MapEditor(){
+	//MapEditor::saveMap();
 }
 
-MapEditor* MapEditor::getInstance(){
-	static MapEditor mapeditor;
+MapEditor* MapEditor::getInstance(std::string mapName){
+	static MapEditor mapeditor(mapName);
 	return &mapeditor;
 }
 
-void MapEditor::update(sf::Event &gEvent, sf::RenderWindow &window){
+void MapEditor::update(sf::RenderWindow &window){
 	
-	if (gEvent.type == sf::Event::MouseButtonPressed && gEvent.mouseButton.button == sf::Mouse::Left){
-		std::cout << "X pos: " << sf::Mouse::getPosition(window).x << std::endl
-			<< "Y pos: " << sf::Mouse::getPosition(window).y << std::endl;
-		int xPos = sf::Mouse::getPosition(window).x;
-		int yPos = sf::Mouse::getPosition(window).y;
-		MapEditor::insertObjekt(sf::Vector2f(xPos, yPos));
+	// Events
+	sf::Event gEvent;
+	while (window.pollEvent(gEvent)){
+
+		if (gEvent.type == sf::Event::Closed)
+			window.close();
+
+		if (gEvent.type == sf::Event::MouseButtonPressed){
+
+			int xPos = sf::Mouse::getPosition(window).x;
+			int yPos = sf::Mouse::getPosition(window).y;
+
+			switch (gEvent.mouseButton.button){
+
+			case sf::Mouse::Left:
+				MapEditor::insertObjekt(sf::Vector2f(xPos, yPos));
+				break;
+
+				// Not done
+			case sf::Mouse::Right:
+				break;
+
+			case sf::Mouse::Middle:
+				MapEditor::changeInsertType();
+				break;
+
+			default:
+				break;
+			}
+		}
+
+		if (gEvent.type == sf::Event::KeyPressed){
+			switch (gEvent.key.code){
+			case sf::Keyboard::S:
+				MapEditor::saveMap();
+				break;
+
+			default:
+				break;
+			}
+		}
 	}
 }
 
@@ -57,20 +95,158 @@ void MapEditor::insertObjekt(sf::Vector2f mousePos){
 	}
 }
 
+void MapEditor::changeInsertType(){
+	switch (mInsertType){
+	case BLOCK0:
+		mInsertType = PLAYER;
+		break;
+	case PLAYER:
+		mInsertType = WORM;
+		break;
+	case WORM:
+		mInsertType = BLOCK0;
+		break;
+	default:
+		break;
+	}
+}
+
 void MapEditor::createBlock0(sf::Vector2f mousePos){
 	mTerrains.push_back(Factory::createBlock0(mousePos));
 }
 
 void MapEditor::createPlayer(sf::Vector2f mousePos){
-	/*for (Entities::size_type i = 0; i < mEntities.size(); i++){
+	bool playerFound(false);
+	
+	for (Entities::size_type i = 0; i < mEntities.size(); i++){
 		if (mEntities[i]->getType() == Entity::PLAYER){
 			delete mEntities[i];
-			mEntities.erase[i];
+			mEntities[i] = Factory::createPlayer(mousePos);
+			playerFound = true;
+			break;
 		}
-	}*/
-	mEntities.push_back(Factory::createPlayer(mousePos));
+	}
+	if (!playerFound)
+		mEntities.push_back(Factory::createPlayer(mousePos));
+	
 }
 
 void MapEditor::createWorm(sf::Vector2f mousePos){
 	mEntities.push_back(Factory::createWorm(mousePos));
+}
+
+void MapEditor::saveMap(){
+
+	mMapname[0] = 'T';
+	MapEditor::writeTerrainToFile(mMapname);
+
+	mMapname[0] = 'E';
+	MapEditor::writeEntityToFile(mMapname);
+
+	mMapname[0] = 'm';
+
+}
+
+void MapEditor::writeTerrainToFile(std::string filename){
+
+	std::string posString;
+	std::string output;
+	std::ofstream terrainfile(filename);
+
+	if (terrainfile.is_open()){
+		for (Terrains::size_type i = 0; i < mTerrains.size(); i++){
+			terrainfile << std::endl;
+			
+			// Inserts typename into output followed by '-'
+			switch (mTerrains[i]->getType()){
+			case Terrain::BLOCK0:
+				output.push_back('B');
+				output.push_back('0');
+				break;
+
+			default:
+				break;
+
+			}
+			output.push_back('-');
+
+			// Inserts xpos into output followed by a ','
+			posString = MapEditor::floatToString(mTerrains[i]->getPos().x);
+			for (std::string::size_type iS = 0; iS < posString.size(); iS++){
+				output.push_back(posString[iS]);
+			}
+			output.push_back(',');
+
+			// Inserts ypos into output
+			posString = MapEditor::floatToString(mTerrains[i]->getPos().y);
+			for (std::string::size_type iS = 0; iS < posString.size(); iS++){
+				output.push_back(posString[iS]);
+			}
+
+			// Writes output into file
+			terrainfile << output;
+			//
+
+			output.clear();
+			posString.clear();
+		}
+	}
+	terrainfile.close();
+}
+
+void MapEditor::writeEntityToFile(std::string filename){
+
+	std::string posString;
+	std::string output;
+	std::ofstream entityFile(filename);
+
+	if (entityFile.is_open()){
+		for (Entities::size_type i = 0; i < mEntities.size(); i++){
+
+			// Inserts typename into output followed by '-'
+			switch (mEntities[i]->getType()){
+			case Entity::PLAYER:
+				output.push_back('P');
+				output.push_back('0');
+				break;
+
+			case Entity::WORM:
+				output.push_back('W');
+				output.push_back('0');
+				break;
+
+			default:
+				break;
+			}
+			output.push_back('-');
+
+			// Inserts xpos into output followed by a ','
+			posString = MapEditor::floatToString(mEntities[i]->getPos().x);
+			for (std::string::size_type iS = 0; iS < posString.size(); iS++){
+				output.push_back(posString[iS]);
+			}
+			output.push_back(',');
+
+			// Inserts ypos into output
+			posString = MapEditor::floatToString(mEntities[i]->getPos().y);
+			for (std::string::size_type iS = 0; iS < posString.size(); iS++){
+				output.push_back(posString[iS]);
+			}
+
+			// Writes output into file
+			entityFile << output << std::endl;
+			//
+
+			output.clear();
+			posString.clear();
+		}
+	}
+	entityFile.close();
+}
+
+std::string MapEditor::floatToString(float f){
+	std::ostringstream ss;
+	ss << f;
+	std::string pos(ss.str());
+	return pos;
 }

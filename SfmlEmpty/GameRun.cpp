@@ -21,7 +21,14 @@ GameRun* GameRun::getInstance(std::string &mapname){
 	return &gamerun;
 }
 
-void GameRun::update(sf::Event &gEvent, sf::RenderWindow &window){
+void GameRun::update(sf::RenderWindow &window){
+	sf::Event gEvent;
+	while (window.pollEvent(gEvent)){
+
+		if (gEvent.type == sf::Event::Closed)
+			window.close();
+
+	}
 	mEntityHandler.updateEntities();
 }
 

@@ -12,6 +12,8 @@ public:
 	static Entity* createPlayer(sf::Vector2f pos);
 	virtual void render(sf::RenderWindow &window);
 	virtual void update();
+	virtual sf::Vector2f getPos(){ return mPosition; }
+
 private:
 	Player(sf::Vector2f pos);
 	void move();

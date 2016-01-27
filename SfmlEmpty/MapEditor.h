@@ -12,18 +12,23 @@ public:
 	enum INSERTTYPE{BLOCK0,
 	PLAYER,
 	WORM};
+
 	static MapEditor* getInstance(std::string mapName);
+
 	virtual void update(sf::RenderWindow &window);
 	virtual void render(sf::RenderWindow &window);
+
+	void createPlayer(sf::Vector2f mousePos);
+	void createBlock0(sf::Vector2f mousePos);
+	void createWorm(sf::Vector2f mousePos);
+
 private:
 	MapEditor(std::string mapName);
 	~MapEditor();
 	void insertObjekt(sf::Vector2f mousePos);
 	void changeInsertType();
 
-	void createPlayer(sf::Vector2f mousePos);
-	void createBlock0(sf::Vector2f mousePos);
-	void createWorm(sf::Vector2f mousePos);
+	
 
 	void saveMap();
 	void writeTerrainToFile(std::string filename);

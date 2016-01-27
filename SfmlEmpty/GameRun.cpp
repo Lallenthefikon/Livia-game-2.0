@@ -6,8 +6,7 @@ GameRun::GameRun(std::string &mapname):
 // Initiate singleton classes
 mTerrainHandler(Terrainhandler::getInstance()),
 mEntityHandler(Entityhandler::getInstance()),
-mMapGenerator(MapGenerator::getInstance(&mTerrainHandler, &mEntityHandler))
-{
+mMapGenerator(MapGenerator::getInstance(&mTerrainHandler, &mEntityHandler)){
 	Toolbox::loadTextures();
 	mMapGenerator.loadMap(mapname);
 }

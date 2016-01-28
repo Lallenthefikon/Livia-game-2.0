@@ -1,8 +1,8 @@
 #pragma once
+
 #include <SFML\Graphics.hpp>
 
-class GameState
-{
+class GameState{
 public:
 	GameState();
 	~GameState();

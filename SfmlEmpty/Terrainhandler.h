@@ -3,9 +3,7 @@
 #include <vector>
 #include "Terrain.h"
 
-
-class Terrainhandler
-{
+class Terrainhandler{
 public:
 	static Terrainhandler& getInstance();
 	void addTerrain(Terrain* terrain);

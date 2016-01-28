@@ -9,8 +9,7 @@
 #include "GameRun.h"
 #include "MapEditor.h"
 
-class GameLoop : public Abstractgame
-{
+class GameLoop : public Abstractgame{
 public:
 	GameLoop();
 	virtual ~GameLoop();
@@ -19,11 +18,15 @@ public:
 	void render();
 private:
 	void calcTimeElapsedAndFPS(sf::Clock &clock);
+	void manualStateChange(int &i);
+	void switchState();
+	void updateState();
 	GameState* mCurrentState;
 	sf::RenderWindow mWindow;
 	std::string mCurrentMap;
 	sf::CircleShape shape;
 	float mTimeElapsed;
 	int FPS;
+	bool gameRunning, mapEditing = true;
 };
 

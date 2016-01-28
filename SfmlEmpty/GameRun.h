@@ -6,8 +6,7 @@
 #include "MapGenerator.h"
 #include "Toolbox.h"
 
-class GameRun : public GameState
-{
+class GameRun : public GameState{
 public:
 	static GameRun* getInstance(std::string &mapname);
 	virtual void update(sf::RenderWindow &window);

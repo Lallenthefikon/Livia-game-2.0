@@ -4,7 +4,6 @@
 #include "Entityhandler.h"
 #include "Terrainhandler.h"
 
-
 class MapGenerator{
 public:
 

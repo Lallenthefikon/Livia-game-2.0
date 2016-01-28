@@ -4,8 +4,7 @@
 #include "Collisionhandler.h"
 #include <vector>
 
-class Entityhandler
-{
+class Entityhandler{
 public:
 	static Entityhandler& getInstance();
 	void addEntity(Entity* entity);

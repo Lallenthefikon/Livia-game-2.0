@@ -1,9 +1,8 @@
 #pragma once
+
 #include <SFML\Graphics.hpp>
 
-
-class Entity
-{
+class Entity{
 public:
 	enum ENTITYTYPE {PLAYER, WORM};
 	Entity();

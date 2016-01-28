@@ -3,8 +3,7 @@
 #include "Entity.h"
 #include "Terrainhandler.h"
 
-class Collisionhandler
-{
+class Collisionhandler{
 public:
 	static Collisionhandler& getInstance();
 	~Collisionhandler();

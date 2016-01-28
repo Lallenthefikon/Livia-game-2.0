@@ -1,8 +1,8 @@
 #pragma once
+
 #include <SFML\Graphics.hpp>
 
-class Terrain
-{
+class Terrain{
 public:
 	enum TERRAINTYPE {BLOCK0};
 	Terrain();

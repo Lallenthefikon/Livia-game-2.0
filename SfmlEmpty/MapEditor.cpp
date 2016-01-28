@@ -9,7 +9,6 @@ mMapname(mapName){
 	Toolbox::loadTextures();
 }
 
-
 MapEditor::~MapEditor(){
 	//MapEditor::saveMap();
 }
@@ -137,13 +136,13 @@ void MapEditor::createWorm(sf::Vector2f mousePos){
 
 void MapEditor::saveMap(){
 
-	mMapname[0] = 'T';
+	mMapname[15] = 'T';
 	MapEditor::writeTerrainToFile(mMapname);
 
-	mMapname[0] = 'E';
+	mMapname[15] = 'E';
 	MapEditor::writeEntityToFile(mMapname);
 
-	mMapname[0] = 'm';
+	mMapname[15] = 'm';
 
 }
 

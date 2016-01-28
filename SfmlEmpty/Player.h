@@ -4,8 +4,7 @@
 #include "Entity.h"
 #include "Toolbox.h"
 
-class Player : public Entity
-{
+class Player : public Entity{
 public:
 	virtual ~Player();
 	virtual Entity::ENTITYTYPE getType(){ return PLAYER; }

@@ -1,6 +1,5 @@
 #include "GameRun.h"
 
-
 GameRun::GameRun(std::string &mapname):
 	
 // Initiate singleton classes
@@ -10,7 +9,6 @@ mMapGenerator(MapGenerator::getInstance(&mTerrainHandler, &mEntityHandler)){
 	Toolbox::loadTextures();
 	mMapGenerator.loadMap(mapname);
 }
-
 
 GameRun::~GameRun(){
 }
@@ -33,7 +31,7 @@ void GameRun::update(sf::RenderWindow &window){
 
 void GameRun::render(sf::RenderWindow &window){
 	window.clear();
-	mEntityHandler.renderEntities(window);
 	mTerrainHandler.renderTerrains(window);
+	mEntityHandler.renderEntities(window);
 	window.display();
 }

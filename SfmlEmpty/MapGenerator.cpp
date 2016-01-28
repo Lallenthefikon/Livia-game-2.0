@@ -6,11 +6,8 @@ mTerrainhandler(terrainhandler),
 mEntityhandler(entityhandler){
 }
 
-
-MapGenerator::~MapGenerator()
-{
+MapGenerator::~MapGenerator(){
 }
-
 
 MapGenerator& MapGenerator::getInstance(Terrainhandler *terrainhandler, Entityhandler *entityhandler){
 	static MapGenerator mapGenerator(terrainhandler, entityhandler);
@@ -21,14 +18,14 @@ MapGenerator& MapGenerator::getInstance(Terrainhandler *terrainhandler, Entityha
 // Finds all mapfiles for a given mapname, mapname must have a letter in front of it
 void MapGenerator::loadMap(std::string &mapname){
 
-	mapname[0] = 'T';
+	mapname[15] = 'T';
 	MapGenerator::readTerrainfile(mapname);
 
 
-	mapname[0] = 'E';
+	mapname[15] = 'E';
 	MapGenerator::readEntityfile(mapname);
 
-	mapname[0] = 'm';
+	mapname[15] = 'm';
 
 }
 

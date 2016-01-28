@@ -1,9 +1,7 @@
 #include "Entityhandler.h"
 
-
 Entityhandler::Entityhandler(){
 }
-
 
 Entityhandler::~Entityhandler(){
 	while (!mEntities.empty()){

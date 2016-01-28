@@ -4,10 +4,8 @@
 #include <SFML\System.hpp>
 #include "Toolbox.h"
 
-class Worm : public Entity
-{
+class Worm : public Entity{
 public:
-	
 	virtual ~Worm();
 	virtual ENTITYTYPE getType(){ return WORM; }
 	static Entity* createWorm(sf::Vector2f pos);

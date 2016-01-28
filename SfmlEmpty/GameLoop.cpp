@@ -1,43 +1,63 @@
 #include "GameLoop.h"
 #include <iostream>
 
-
 GameLoop::GameLoop():
-mCurrentMap("mMap0.txt"),
+mCurrentMap("resources/maps/mMap0.txt"),
 mWindow(sf::VideoMode(640, 480), "SFML Application"){
 	mWindow.setVerticalSyncEnabled(true);
-	
+	updateState();
 }
-
 
 GameLoop::~GameLoop(){
 }
 
+void GameLoop::switchState(){
+	if (!gameRunning){
+		gameRunning = true;
+		mapEditing = false;
+		return;
+	}
+	else if (!mapEditing){
+		mapEditing = true;
+		gameRunning = false;
+	}
+}
+
+void GameLoop::updateState(){
+	if (gameRunning){
+		mCurrentState = GameRun::getInstance(mCurrentMap);
+	}
+	else if (mapEditing){
+		mCurrentState = MapEditor::getInstance(mCurrentMap);
+	}
+}
+
+void GameLoop::manualStateChange(int &i){
+	// Switches between the different states
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::C)){
+		i++;
+		//std::cout << i << std::endl;
+	}
+	else i = 0;
+
+	// Makes sure button acts as if pressed once
+	if (i == 1){
+		switchState();
+		updateState();
+	}
+}
+
 void GameLoop::run(){
-
-	mCurrentState = GameRun::getInstance(mCurrentMap);
-	//mCurrentState = MapEditor::getInstance(mCurrentMap);
-
-	shape.setRadius(80.f);
-	shape.setPosition((mWindow.getSize().x / 2) - shape.getRadius(), (mWindow.getSize().y / 2) - shape.getRadius());
-	shape.setFillColor(sf::Color::Red);
+	
 	mWindow.setKeyRepeatEnabled(false);
 
-	
+	int clickOnce = 0;
 
 	sf::Clock clock;
 
-
 	// Loop
 	while (mWindow.isOpen()){
-
-		/*sf::Event gEvent;
-		while (mWindow.pollEvent(gEvent)){
-
-			if (gEvent.type == sf::Event::Closed)
-				mWindow.close();
-			
-		}*/
+		manualStateChange(clickOnce);
 		update();
 		render();
 		calcTimeElapsedAndFPS(clock);
@@ -49,12 +69,7 @@ void GameLoop::update(){
 }
 
 void GameLoop::render(){
-	//mWindow.clear();
-	
-	mCurrentState->render(mWindow);
-	
-	mWindow.draw(shape);
-	//mWindow.display();	
+	mCurrentState->render(mWindow);	
 }
 
 void GameLoop::calcTimeElapsedAndFPS(sf::Clock &clock){

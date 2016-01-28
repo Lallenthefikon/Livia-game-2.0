@@ -1,6 +1,5 @@
 #pragma once
-class Abstractgame
-{
+class Abstractgame{
 public:
 	Abstractgame();
 	virtual ~Abstractgame();

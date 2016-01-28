@@ -1,6 +1,5 @@
 #include "Worm.h"
 
-
 Worm::Worm(sf::Vector2f pos):
 mPosition(pos){
 	mSprite.setTexture(Toolbox::getTexture(Toolbox::WORMTEXTURE));
@@ -8,8 +7,7 @@ mPosition(pos){
 }
 
 
-Worm::~Worm()
-{
+Worm::~Worm(){
 }
 
 Entity* Worm::createWorm(sf::Vector2f pos){

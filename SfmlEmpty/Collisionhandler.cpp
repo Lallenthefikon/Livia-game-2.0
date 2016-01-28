@@ -1,9 +1,7 @@
 #include "Collisionhandler.h"
 
-
 Collisionhandler::Collisionhandler(){
 }
-
 
 Collisionhandler::~Collisionhandler(){
 }

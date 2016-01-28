@@ -1,4 +1,5 @@
 #pragma once
+
 #include "GameState.h"
 #include <vector>
 #include "Factory.h"
@@ -6,8 +7,7 @@
 #include "Terrain.h"
 #include "Toolbox.h"
 
-class MapEditor : public GameState
-{
+class MapEditor : public GameState{
 public:
 	enum INSERTTYPE{BLOCK0,
 	PLAYER,

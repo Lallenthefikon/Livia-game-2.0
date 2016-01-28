@@ -9,11 +9,15 @@
 
 class MapEditor : public GameState{
 public:
+
+	typedef std::vector<Entity*> Entities;
+	typedef std::vector<Terrain*> Terrains;
+
 	enum INSERTTYPE{BLOCK0,
 	PLAYER,
 	WORM};
 
-	static MapEditor* getInstance(std::string mapName);
+	static MapEditor* getInstance(std::string &mapName);
 
 	virtual void update(sf::RenderWindow &window);
 	virtual void render(sf::RenderWindow &window);
@@ -22,25 +26,26 @@ public:
 	void createBlock0(sf::Vector2f mousePos);
 	void createWorm(sf::Vector2f mousePos);
 
+	void setCurrentMap(std::string &mapname);
+
+	void clearMap();
+
 private:
-	MapEditor(std::string mapName);
+	MapEditor(std::string &mapName);
 	~MapEditor();
+
 	void insertObjekt(sf::Vector2f mousePos);
 	void changeInsertType();
-
-	
 
 	void saveMap();
 	void writeTerrainToFile(std::string filename);
 	void writeEntityToFile(std::string filename);
+	void internalClear();
 
 	std::string floatToString(float f);
 
 	INSERTTYPE mInsertType;
-	std::string mMapname;
-
-	typedef std::vector<Entity*> Entities;
-	typedef std::vector<Terrain*> Terrains;
+	std::string mCurrentMap;
 
 	Entities mEntities;
 	Terrains mTerrains;

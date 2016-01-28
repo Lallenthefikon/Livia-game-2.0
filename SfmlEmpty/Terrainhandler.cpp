@@ -3,7 +3,6 @@
 Terrainhandler::Terrainhandler(){
 }
 
-
 Terrainhandler::~Terrainhandler(){
 }
 
@@ -19,5 +18,11 @@ void Terrainhandler::addTerrain(Terrain* terrain){
 void Terrainhandler::renderTerrains(sf::RenderWindow &window){
 	for (Terrains::size_type i = 0; i < mTerrains.size(); i++){
 		mTerrains[i]->render(window);
+	}
+}
+
+void Terrainhandler::updateTerrains(){
+	for (Terrains::size_type i = 0; i < mTerrains.size(); i++){
+		mTerrains[i]->update();
 	}
 }

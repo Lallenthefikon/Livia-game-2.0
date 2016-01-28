@@ -6,7 +6,6 @@ mPosition(pos){
 	mSprite.setPosition(mPosition);
 }
 
-
 Worm::~Worm(){
 }
 
@@ -19,5 +18,9 @@ void Worm::render(sf::RenderWindow &window){
 }
 
 void Worm::update(){
+
+}
+
+void Worm::addVector(sf::Vector2f &vector){
 
 }

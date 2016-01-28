@@ -9,6 +9,7 @@ public:
 	virtual ~Terrain();
 	virtual TERRAINTYPE getType() = 0;
 	virtual void render(sf::RenderWindow &window) = 0;
+	virtual void update() = 0;
 	virtual sf::Vector2f getPos() = 0;
 };
 

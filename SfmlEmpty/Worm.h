@@ -12,6 +12,7 @@ public:
 	virtual void render(sf::RenderWindow &window);
 	virtual void update();
 	virtual sf::Vector2f getPos(){ return mPosition; }
+	virtual void addVector(sf::Vector2f &vector);
 private:
 	sf::Sprite mSprite;
 	Worm(sf::Vector2f pos);

@@ -6,7 +6,6 @@ mPosition(pos){
 	mSprite.setPosition(mPosition);
 }
 
-
 Worm::~Worm(){
 }
 

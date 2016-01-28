@@ -10,6 +10,7 @@ public:
 	virtual Terrain::TERRAINTYPE getType(){ return Terrain::BLOCK0; }
 	static Terrain* createBlock0(sf::Vector2f pos);
 	virtual void render(sf::RenderWindow &window);
+	virtual void update();
 	virtual sf::Vector2f getPos(){ return mPosition; }
 private:
 	Block0(sf::Vector2f pos);

@@ -17,3 +17,7 @@ Terrain* Block0::createBlock0(sf::Vector2f pos){
 void Block0::render(sf::RenderWindow &window){
 	window.draw(mSprite);
 }
+
+void Block0::update(){
+
+}

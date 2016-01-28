@@ -23,7 +23,9 @@ void Entityhandler::renderEntities(sf::RenderWindow &window){
 }
 
 void Entityhandler::updateEntities(){
+	// Adds gravity to all entities
 	addVector();
+
 	for (Entities::size_type i = 0; i < mEntities.size(); i++){
 		mEntities[i]->update();
 	}

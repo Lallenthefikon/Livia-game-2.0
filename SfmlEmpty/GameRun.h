@@ -3,6 +3,7 @@
 #include "GameState.h"
 #include "Entityhandler.h"
 #include "Terrainhandler.h"
+#include "Collisionhandler.h"
 #include "MapGenerator.h"
 #include "Toolbox.h"
 
@@ -18,5 +19,6 @@ private:
 	Entityhandler& mEntityHandler;
 	Terrainhandler& mTerrainHandler;
 	MapGenerator& mMapGenerator;
+	Collisionhandler& mCollisionHandler;
 };
 

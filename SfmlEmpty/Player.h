@@ -12,6 +12,7 @@ public:
 	virtual void render(sf::RenderWindow &window);
 	virtual void update();
 	virtual sf::Vector2f getPos(){ return mSprite.getPosition(); }
+	virtual sf::Vector2f getOffset(){ return mSpriteOffset; }
 	virtual float getWidth(){ return mSprite.getLocalBounds().width; }
 	virtual float getHeight(){ return mSprite.getLocalBounds().height; }
 	virtual void addVector(sf::Vector2f &vector);
@@ -25,7 +26,11 @@ private:
 	void showCoords();
 	sf::Vector2f mGravity, mVelocity = sf::Vector2f(0, 0), mVelocityGoal = sf::Vector2f(0, 0);
 	sf::Sprite mSprite;
+	sf::Vector2f mPosition;
+	sf::Vector2f mSpriteOffset;
 	float mPlayerSpeed;
 	bool mIsOnScreen = true;
+	
+
 };
 

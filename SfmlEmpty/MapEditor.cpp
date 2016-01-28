@@ -79,6 +79,49 @@ void MapEditor::render(sf::RenderWindow &window){
 	window.display();
 }
 
+void MapEditor::createBlock0(sf::Vector2f mousePos){
+	mTerrains.push_back(Factory::createBlock0(mousePos));
+}
+
+void MapEditor::createPlayer(sf::Vector2f mousePos){
+	bool playerFound(false);
+	
+	for (Entities::size_type i = 0; i < mEntities.size(); i++){
+		if (mEntities[i]->getType() == Entity::PLAYER){
+			delete mEntities[i];
+			mEntities[i] = Factory::createPlayer(mousePos);
+			playerFound = true;
+			break;
+		}
+	}
+	if (!playerFound)
+		mEntities.push_back(Factory::createPlayer(mousePos));
+	
+}
+
+void MapEditor::createWorm(sf::Vector2f mousePos){
+	mEntities.push_back(Factory::createWorm(mousePos));
+}
+
+void MapEditor::loadMap(){
+	mCurrentMap[15] = 'E';
+	mEntities = mMaploader.getEntities(mCurrentMap);
+
+	mCurrentMap[15] = 'T';
+	mTerrains = mMaploader.getTerrain(mCurrentMap);
+
+	mCurrentMap[15] = 'm';
+
+	mMaploader.clear();
+}
+
+void MapEditor::clearMap(){
+	MapEditor::internalClear();
+}
+
+
+// Privates
+
 void MapEditor::insertObjekt(sf::Vector2f mousePos){
 	switch (mInsertType){
 	case BLOCK0:
@@ -109,48 +152,6 @@ void MapEditor::changeInsertType(){
 	default:
 		break;
 	}
-}
-
-void MapEditor::createBlock0(sf::Vector2f mousePos){
-	mTerrains.push_back(Factory::createBlock0(mousePos));
-}
-
-void MapEditor::createPlayer(sf::Vector2f mousePos){
-	bool playerFound(false);
-	
-	for (Entities::size_type i = 0; i < mEntities.size(); i++){
-		if (mEntities[i]->getType() == Entity::PLAYER){
-			delete mEntities[i];
-			mEntities[i] = Factory::createPlayer(mousePos);
-			playerFound = true;
-			break;
-		}
-	}
-	if (!playerFound)
-		mEntities.push_back(Factory::createPlayer(mousePos));
-	
-}
-
-void MapEditor::loadMap(){
-	mCurrentMap[15] = 'E';
-	mEntities = mMaploader.getEntities(mCurrentMap);
-
-	mCurrentMap[15] = 'T';
-	mTerrains = mMaploader.getTerrain(mCurrentMap);
-
-	mCurrentMap[15] = 'm';
-
-	mMaploader.clear();
-}
-
-void MapEditor::clearMap(){
-	MapEditor::internalClear();
-}
-
-
-// Privates
-void MapEditor::createWorm(sf::Vector2f mousePos){
-	mEntities.push_back(Factory::createWorm(mousePos));
 }
 
 void MapEditor::saveMap(){
@@ -189,14 +190,14 @@ void MapEditor::writeTerrainToFile(std::string filename){
 			output.push_back('-');
 
 			// Inserts xpos into output followed by a ','
-			posString = MapEditor::floatToString(mTerrains[i]->getPos().x);
+			posString = MapEditor::floatToString(mTerrains[i]->getPos().x + mTerrains[i]->getOffset().x);
 			for (std::string::size_type iS = 0; iS < posString.size(); iS++){
 				output.push_back(posString[iS]);
 			}
 			output.push_back(',');
 
 			// Inserts ypos into output
-			posString = MapEditor::floatToString(mTerrains[i]->getPos().y);
+			posString = MapEditor::floatToString(mTerrains[i]->getPos().y + mTerrains[i]->getOffset().y);
 			for (std::string::size_type iS = 0; iS < posString.size(); iS++){
 				output.push_back(posString[iS]);
 			}
@@ -239,14 +240,14 @@ void MapEditor::writeEntityToFile(std::string filename){
 			output.push_back('-');
 
 			// Inserts xpos into output followed by a ','
-			posString = MapEditor::floatToString(mEntities[i]->getPos().x);
+			posString = MapEditor::floatToString(mEntities[i]->getPos().x + mEntities[i]->getOffset().x);
 			for (std::string::size_type iS = 0; iS < posString.size(); iS++){
 				output.push_back(posString[iS]);
 			}
 			output.push_back(',');
 
 			// Inserts ypos into output
-			posString = MapEditor::floatToString(mEntities[i]->getPos().y);
+			posString = MapEditor::floatToString(mEntities[i]->getPos().y + mEntities[i]->getOffset().x);
 			for (std::string::size_type iS = 0; iS < posString.size(); iS++){
 				output.push_back(posString[iS]);
 			}

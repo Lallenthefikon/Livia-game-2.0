@@ -5,11 +5,10 @@ static float timeElapsed = 0.1666666666666667;
 static float jumpVelocity = -300;
 
 Player::Player(sf::Vector2f pos) :
-mPlayerSpeed(30){
-
+mPlayerSpeed(30),
+mSpriteOffset(mSprite.getLocalBounds().width / 2, mSprite.getLocalBounds().height / 2){
 	mSprite.setTexture(Toolbox::getTexture(Toolbox::PLAYERTEXTURE));
-	sf::Vector2f spriteOffset(mSprite.getLocalBounds().width / 2, mSprite.getLocalBounds().height / 2);
-	mSprite.setPosition(pos - spriteOffset);
+	mSprite.setPosition(pos - mSpriteOffset);
 }
 
 
@@ -43,6 +42,7 @@ void Player::move() {
 
 	// Updates the player's position
 	mSprite.move(mVelocity * timeElapsed + mGravity * timeElapsed);
+	
 
 	// Keeps the player above the bottom, ####TEMPORARY####
 	if (mSprite.getPosition().y > 360) mSprite.setPosition(mSprite.getPosition().x, 360);

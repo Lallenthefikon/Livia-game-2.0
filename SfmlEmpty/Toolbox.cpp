@@ -5,7 +5,6 @@ static sf::Texture mWormtexture;
 static sf::Texture mBlock0texture;
 static sf::Texture mPlayertexture;
 
-
 Toolbox& Toolbox::getInstance(){
 	static Toolbox toolbox;
 	return toolbox;

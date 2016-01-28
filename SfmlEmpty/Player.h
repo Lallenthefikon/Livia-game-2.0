@@ -12,6 +12,8 @@ public:
 	virtual void render(sf::RenderWindow &window);
 	virtual void update();
 	virtual sf::Vector2f getPos(){ return mPosition; }
+	virtual float getWidth(){ return mSprite.getGlobalBounds().width; }
+	virtual float getHeight(){ return mSprite.getGlobalBounds().height; }
 	virtual void addVector(sf::Vector2f &vector);
 private:
 	Player(sf::Vector2f pos);

@@ -12,5 +12,7 @@ public:
 	virtual void update() = 0;
 	virtual sf::Vector2f getPos() = 0;
 	virtual void addVector(sf::Vector2f &vector) = 0;
+	virtual float getWidth() = 0;
+	virtual float getHeight() = 0;
 };
 

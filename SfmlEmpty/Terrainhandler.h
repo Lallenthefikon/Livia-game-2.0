@@ -11,9 +11,13 @@ public:
 	void renderTerrains(sf::RenderWindow &window);
 	void updateTerrains();
 	Terrains& getTerrains(){ return mTerrains; }
+	void clear();
 private:
 	Terrainhandler();
 	~Terrainhandler();
+
+	void internalClear();
+
 	Terrains mTerrains;
 };
 

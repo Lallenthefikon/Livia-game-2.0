@@ -1,30 +1,30 @@
 #include "MapEditMaploader.h"
 #include <fstream>
 
-MapEditMaploader::MapEditMaploader(std::string &mapname):
-mMapEditor(MapEditor::getInstance(mapname)){
+MapEditMaploader::MapEditMaploader(){
 }
 
 
 MapEditMaploader::~MapEditMaploader(){
 }
 
-MapEditMaploader& MapEditMaploader::getInstance(std::string &mapname){
-	static MapEditMaploader mapeditmaploader(mapname);
+MapEditMaploader& MapEditMaploader::getInstance(){
+	static MapEditMaploader mapeditmaploader;
 	return mapeditmaploader;
 }
 
- void MapEditMaploader::loadMap(std::string &mapname){
+MapEditMaploader::Terrains MapEditMaploader::getTerrain(std::string &filename){
+	MapEditMaploader::readTerrainfile(filename);
+	return mTerrains;
+}
 
-	 mMapEditor->clearMap();
+MapEditMaploader::Entities MapEditMaploader::getEntities(std::string &filename){
+	MapEditMaploader::readEntityfile(filename);
+	return mEntities;
+}
 
-	mapname[15] = 'T';
-	MapEditMaploader::readTerrainfile(mapname);
-
-	mapname[15] = 'E';
-	MapEditMaploader::readEntityfile(mapname);
-
-	mapname[15] = 'm';
+void MapEditMaploader::clear(){
+	MapEditMaploader::internalClear();
 }
 
  void MapEditMaploader::readTerrainfile(std::string &filename){
@@ -95,15 +95,15 @@ MapEditMaploader& MapEditMaploader::getInstance(std::string &mapname){
  }
 
  void MapEditMaploader::createBlock0(sf::Vector2f &pos){
-	 mMapEditor->createBlock0(pos);
+	 mTerrains.push_back(Factory::createBlock0(pos));
  }
 
  void MapEditMaploader::createPlayer(sf::Vector2f &pos){
-	 mMapEditor->createPlayer(pos);
+	 mEntities.push_back(Factory::createPlayer(pos));
  }
 
  void MapEditMaploader::createWorm(sf::Vector2f &pos){
-	 mMapEditor->createWorm(pos);
+	 mEntities.push_back(Factory::createWorm(pos));
  }
 
  sf::Vector2f MapEditMaploader::readPosition(std::string line){
@@ -281,4 +281,9 @@ MapEditMaploader& MapEditMaploader::getInstance(std::string &mapname){
 		 }
 	 }
 	 return sf::Vector2f(xSum, ySum);
+ }
+
+ void MapEditMaploader::internalClear(){
+	 mEntities.clear();
+	 mTerrains.clear();
  }

@@ -1,17 +1,26 @@
 #pragma once
 
-#include "MapEditor.h"
-
-
+#include <SFML\System.hpp>
+#include <vector>
+#include "Factory.h"
+#include "Entity.h"
+#include "Terrain.h"
 
 class MapEditMaploader{
 public:
 
-	static MapEditMaploader& getInstance(std::string &mapname);
-	void loadMap(std::string &mapname);
+	typedef std::vector<Entity*> Entities;
+	typedef std::vector<Terrain*> Terrains;
+
+	static MapEditMaploader& getInstance();
+
+	Terrains getTerrain(std::string &filename);
+	Entities getEntities(std::string &filename);
+
+	void clear();
 
 private:
-	MapEditMaploader(std::string &mapname);
+	MapEditMaploader();
 	~MapEditMaploader();
 
 	void readTerrainfile(std::string &mapname);
@@ -23,6 +32,9 @@ private:
 
 	sf::Vector2f readPosition(std::string line);
 
-	MapEditor *mMapEditor;
+	void internalClear();
+
+	Entities mEntities;
+	Terrains mTerrains;
 };
 

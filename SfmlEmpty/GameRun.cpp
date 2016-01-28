@@ -5,8 +5,9 @@ GameRun::GameRun(std::string &mapname):
 // Initiate singleton classes
 mTerrainHandler(Terrainhandler::getInstance()),
 mEntityHandler(Entityhandler::getInstance()),
-mMapGenerator(MapGenerator::getInstance(&mTerrainHandler, &mEntityHandler)),
-mCollisionHandler(Collisionhandler::getInstance()){
+mMapGenerator(MapGenerator::getInstance()),
+mCollisionHandler(Collisionhandler::getInstance()),
+mCurrentMap(mapname){
 	Toolbox::loadTextures();
 	mMapGenerator.loadMap(mapname);
 }
@@ -38,4 +39,8 @@ void GameRun::render(sf::RenderWindow &window){
 	mTerrainHandler.renderTerrains(window);
 	mEntityHandler.renderEntities(window);
 	window.display();
+}
+
+void GameRun::loadMap(){
+	mMapGenerator.loadMap(mCurrentMap);
 }

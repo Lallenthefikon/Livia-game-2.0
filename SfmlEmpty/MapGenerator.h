@@ -7,13 +7,13 @@
 class MapGenerator{
 public:
 
-	static MapGenerator& getInstance(Terrainhandler *terrainhandler, Entityhandler *entityhandler);
+	static MapGenerator& getInstance();
 
 	void loadMap(std::string &mapname);
 
 	
 private:
-	MapGenerator(Terrainhandler *terrainhandler, Entityhandler *entityhandler);
+	MapGenerator();
 	~MapGenerator();
 
 	sf::Vector2f readPosition(std::string line);

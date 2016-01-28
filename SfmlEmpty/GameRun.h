@@ -12,6 +12,8 @@ public:
 	static GameRun* getInstance(std::string &mapname);
 	virtual void update(sf::RenderWindow &window);
 	virtual void render(sf::RenderWindow &window);
+	virtual void loadMap();
+	virtual void setCurrentMap(std::string &mapname){ mCurrentMap = mapname; }
 private:
 	GameRun(std::string &mapname);
 	~GameRun();
@@ -20,5 +22,7 @@ private:
 	Terrainhandler& mTerrainHandler;
 	MapGenerator& mMapGenerator;
 	Collisionhandler& mCollisionHandler;
+
+	std::string mCurrentMap;
 };
 

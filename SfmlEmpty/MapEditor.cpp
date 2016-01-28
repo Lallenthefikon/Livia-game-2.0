@@ -5,8 +5,10 @@
 
 MapEditor::MapEditor(std::string &mapName):
 mInsertType(BLOCK0),
-mCurrentMap(mapName){
+mCurrentMap(mapName),
+mMaploader(MapEditMaploader::getInstance()){
 	Toolbox::loadTextures();
+	MapEditor::loadMap();
 }
 
 MapEditor::~MapEditor(){
@@ -129,8 +131,16 @@ void MapEditor::createPlayer(sf::Vector2f mousePos){
 	
 }
 
-void MapEditor::setCurrentMap(std::string &mapname){
-	mCurrentMap = mapname;
+void MapEditor::loadMap(){
+	mCurrentMap[15] = 'E';
+	mEntities = mMaploader.getEntities(mCurrentMap);
+
+	mCurrentMap[15] = 'T';
+	mTerrains = mMaploader.getTerrain(mCurrentMap);
+
+	mCurrentMap[15] = 'm';
+
+	mMaploader.clear();
 }
 
 void MapEditor::clearMap(){

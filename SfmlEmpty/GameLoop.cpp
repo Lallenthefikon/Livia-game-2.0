@@ -26,10 +26,11 @@ void GameLoop::switchState(){
 void GameLoop::updateState(){
 	if (gameRunning){
 		mCurrentState = GameRun::getInstance(mCurrentMap);
+		mCurrentState->loadMap();
 	}
 	else if (mapEditing){
 		mCurrentState = MapEditor::getInstance(mCurrentMap);
-		MapEditMaploader::getInstance(mCurrentMap).loadMap(mCurrentMap);
+		mCurrentState->loadMap();
 	}
 }
 

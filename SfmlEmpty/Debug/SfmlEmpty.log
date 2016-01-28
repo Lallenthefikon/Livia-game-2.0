@@ -1,14 +1,9 @@
-﻿Build started 2016-01-28 11:51:06.
+﻿Build started 2016-01-28 13:38:48.
      1>Project "\\hsnas6\StudentHome\2014\a14alehu\Desktop\GitHub\Livia-game-2.0\SfmlEmpty\SfmlEmpty.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"\\hsnas6\StudentHome\2014\a14alehu\Desktop\GitHub\Livia-game-2.0\\SFML-2.3.2\include" /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt GameLoop.cpp Main.cpp MapEditMaploader.cpp MapEditor.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"\\hsnas6\StudentHome\2014\a14alehu\Desktop\GitHub\Livia-game-2.0\\SFML-2.3.2\include" /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt MapEditor.cpp
          MapEditor.cpp
-     1>\\hsnas6\studenthome\2014\a14alehu\desktop\github\livia-game-2.0\sfmlempty\mapeditor.cpp(37): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-         MapEditMaploader.cpp
-         Generating Code...
-         Skipping... (no relevant changes detected)
-         Main.cpp
-         GameLoop.cpp
+     1>\\hsnas6\studenthome\2014\a14alehu\desktop\github\livia-game-2.0\sfmlempty\mapeditor.cpp(39): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"\\hsnas6\StudentHome\2014\a14alehu\Desktop\GitHub\Livia-game-2.0\Debug\SfmlEmpty.exe" /INCREMENTAL /NOLOGO /LIBPATH:"\\hsnas6\StudentHome\2014\a14alehu\Desktop\GitHub\Livia-game-2.0\\SFML-2.3.2\lib" "sfml-graphics-d.lib" "sfml-window-d.lib" "sfml-system-d.lib" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"\\hsnas6\StudentHome\2014\a14alehu\Desktop\GitHub\Livia-game-2.0\Debug\SfmlEmpty.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"\\hsnas6\StudentHome\2014\a14alehu\Desktop\GitHub\Livia-game-2.0\Debug\SfmlEmpty.lib" /MACHINE:X86 Debug\Abstractgame.obj
          Debug\Block0.obj
@@ -33,4 +28,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:06.96
+Time Elapsed 00:00:04.74

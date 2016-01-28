@@ -26,3 +26,16 @@ void Terrainhandler::updateTerrains(){
 		mTerrains[i]->update();
 	}
 }
+
+void Terrainhandler::clear(){
+	Terrainhandler::internalClear();
+}
+
+// Private funcs
+
+void Terrainhandler::internalClear(){
+	while (!mTerrains.empty()){
+		delete mTerrains.back();
+		mTerrains.pop_back();
+	}
+}

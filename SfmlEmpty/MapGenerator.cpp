@@ -1,22 +1,25 @@
 #include "MapGenerator.h"
 #include <fstream>
 
-MapGenerator::MapGenerator(Terrainhandler *terrainhandler, Entityhandler *entityhandler) :
-mTerrainhandler(terrainhandler),
-mEntityhandler(entityhandler){
+MapGenerator::MapGenerator() :
+mTerrainhandler(&Terrainhandler::getInstance()),
+mEntityhandler(&Entityhandler::getInstance()){
 }
 
 MapGenerator::~MapGenerator(){
 }
 
-MapGenerator& MapGenerator::getInstance(Terrainhandler *terrainhandler, Entityhandler *entityhandler){
-	static MapGenerator mapGenerator(terrainhandler, entityhandler);
+MapGenerator& MapGenerator::getInstance(){
+	static MapGenerator mapGenerator;
 	return mapGenerator;
 }
 
 
 // Finds all mapfiles for a given mapname, mapname must have a letter in front of it
 void MapGenerator::loadMap(std::string &mapname){
+
+	mEntityhandler->clear();
+	mTerrainhandler->clear();
 
 	mapname[15] = 'T';
 	MapGenerator::readTerrainfile(mapname);

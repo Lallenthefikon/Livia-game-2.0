@@ -40,3 +40,16 @@ void Entityhandler::addVector(){
 		mEntities[i]->addVector(mGravity);
 	}
 }
+
+void Entityhandler::clear(){
+	Entityhandler::internalClear();
+}
+
+// Private funcs
+
+void Entityhandler::internalClear(){
+	while (!mEntities.empty()){
+		delete mEntities.back();
+		mEntities.pop_back();
+	}
+}

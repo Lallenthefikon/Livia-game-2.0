@@ -6,12 +6,10 @@
 #include "Entity.h"
 #include "Terrain.h"
 #include "Toolbox.h"
+#include "MapEditMaploader.h"
 
 class MapEditor : public GameState{
 public:
-
-	typedef std::vector<Entity*> Entities;
-	typedef std::vector<Terrain*> Terrains;
 
 	enum INSERTTYPE{BLOCK0,
 	PLAYER,
@@ -26,7 +24,8 @@ public:
 	void createBlock0(sf::Vector2f mousePos);
 	void createWorm(sf::Vector2f mousePos);
 
-	void setCurrentMap(std::string &mapname);
+	virtual void setCurrentMap(std::string &mapname){ mCurrentMap = mapname; }
+	virtual void loadMap();
 
 	void clearMap();
 
@@ -44,8 +43,13 @@ private:
 
 	std::string floatToString(float f);
 
+	MapEditMaploader &mMaploader;
+
 	INSERTTYPE mInsertType;
 	std::string mCurrentMap;
+
+	typedef std::vector<Entity*> Entities;
+	typedef std::vector<Terrain*> Terrains;
 
 	Entities mEntities;
 	Terrains mTerrains;

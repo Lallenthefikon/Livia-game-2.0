@@ -12,9 +12,11 @@ public:
 	void updateEntities();
 	Entities& getEntities(){ return mEntities; }
 	void addVector();
+	void clear();
 private:
 	Entityhandler();
 	~Entityhandler();
+	void internalClear();
 	Entities mEntities;
 	sf::Vector2f mGravity;
 };

@@ -17,6 +17,7 @@ public:
 	virtual float getHeight(){ return mSprite.getGlobalBounds().height; }
 	virtual void addVector(sf::Vector2f &vector);
 	virtual bool isOnScreen(){ return mIsOnScreen; }
+	virtual void collided(std::string &direction);
 private:
 	sf::Sprite mSprite;
 	sf::Vector2f mSpriteOffset;

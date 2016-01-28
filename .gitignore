@@ -34,3 +34,14 @@
 *.app
 *.tlog
 *.log
+*.idb
+*.tlog
+*.sdf
+*.suo
+SfmlEmpty.sdf
+*.log
+SfmlEmpty/Debug/SfmlEmpty.tlog/CL.read.1.tlog
+*.pdb
+SfmlEmpty/Debug/vc120.idb
+*.tlog
+SfmlEmpty/Debug/SfmlEmpty.tlog/link.read.1.tlog

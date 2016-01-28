@@ -26,6 +26,8 @@ private:
 	sf::RenderWindow mWindow;
 	std::string mCurrentMap;
 	sf::CircleShape shape;
+	sf::SoundBuffer mAmbienceBuffer;
+	sf::Sound mAmbienceSound;
 	float mTimeElapsed;
 	int FPS;
 	bool gameRunning, mapEditing = true;

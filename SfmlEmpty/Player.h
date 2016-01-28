@@ -17,6 +17,7 @@ public:
 	virtual float getHeight(){ return mSprite.getLocalBounds().height; }
 	virtual void addVector(sf::Vector2f &vector);
 	virtual bool isOnScreen(){ return mIsOnScreen; }
+	virtual void collided(std::string &direction);
 private:
 	Player(sf::Vector2f pos);
 	void move();

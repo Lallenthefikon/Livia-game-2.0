@@ -42,7 +42,7 @@ void Player::move() {
 	mVelocity.y = lerp(mVelocityGoal.y, mVelocity.y, timeElapsed * 100);
 
 	// Updates the player's position
-	mSprite.move(mVelocity * timeElapsed + mGravity * timeElapsed);
+	mSprite.move((mVelocity + mGravity) * timeElapsed);
 
 	// Keeps the player above the bottom, ####TEMPORARY####
 	if (mSprite.getPosition().y > 360) mSprite.setPosition(mSprite.getPosition().x, 360);
@@ -107,4 +107,8 @@ void Player::addVector(sf::Vector2f &vector){
 
 void Player::showCoords(){
 	std::cout << "X: " << mSprite.getPosition().x << " Y: " << mSprite.getPosition().y << std::endl;
+}
+
+void Player::collided(std::string &direction) {
+
 }

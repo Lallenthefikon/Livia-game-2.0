@@ -1,11 +1,25 @@
-﻿Build started 2016-01-28 13:38:48.
-     1>Project "\\hsnas6\StudentHome\2014\a14alehu\Desktop\GitHub\Livia-game-2.0\SfmlEmpty\SfmlEmpty.vcxproj" on node 2 (Build target(s)).
+﻿Build started 2016-01-28 14:58:35.
+     1>Project "P:\Documents\GitHub\Livia-game-2.0\SfmlEmpty\SfmlEmpty.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"\\hsnas6\StudentHome\2014\a14alehu\Desktop\GitHub\Livia-game-2.0\\SFML-2.3.2\include" /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt MapEditor.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"P:\Documents\GitHub\Livia-game-2.0\\SFML-2.3.2\include" /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Abstractgame.cpp GameLoop.cpp GameRun.cpp GameState.cpp Main.cpp MapEditor.cpp Player.cpp Toolbox.cpp
+         Player.cpp
+     1>p:\documents\github\livia-game-2.0\sfmlempty\player.cpp(4): warning C4305: 'initializing' : truncation from 'double' to 'float'
+         GameRun.cpp
+         GameLoop.cpp
+     1>p:\documents\github\livia-game-2.0\sfmlempty\gameloop.cpp(86): warning C4244: '=' : conversion from 'sf::Int32' to 'float', possible loss of data
+     1>p:\documents\github\livia-game-2.0\sfmlempty\gameloop.cpp(87): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+         Generating Code...
+         Compiling...
          MapEditor.cpp
-     1>\\hsnas6\studenthome\2014\a14alehu\desktop\github\livia-game-2.0\sfmlempty\mapeditor.cpp(39): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>p:\documents\github\livia-game-2.0\sfmlempty\mapeditor.cpp(39): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+         Main.cpp
+         GameState.cpp
+         Generating Code...
+         Skipping... (no relevant changes detected)
+         Toolbox.cpp
+         Abstractgame.cpp
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"\\hsnas6\StudentHome\2014\a14alehu\Desktop\GitHub\Livia-game-2.0\Debug\SfmlEmpty.exe" /INCREMENTAL /NOLOGO /LIBPATH:"\\hsnas6\StudentHome\2014\a14alehu\Desktop\GitHub\Livia-game-2.0\\SFML-2.3.2\lib" "sfml-graphics-d.lib" "sfml-window-d.lib" "sfml-system-d.lib" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"\\hsnas6\StudentHome\2014\a14alehu\Desktop\GitHub\Livia-game-2.0\Debug\SfmlEmpty.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"\\hsnas6\StudentHome\2014\a14alehu\Desktop\GitHub\Livia-game-2.0\Debug\SfmlEmpty.lib" /MACHINE:X86 Debug\Abstractgame.obj
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"P:\Documents\GitHub\Livia-game-2.0\Debug\SfmlEmpty.exe" /INCREMENTAL /NOLOGO /LIBPATH:"P:\Documents\GitHub\Livia-game-2.0\\SFML-2.3.2\lib" "sfml-audio-d.lib" "sfml-graphics-d.lib" "sfml-window-d.lib" "sfml-system-d.lib" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"P:\Documents\GitHub\Livia-game-2.0\Debug\SfmlEmpty.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"P:\Documents\GitHub\Livia-game-2.0\Debug\SfmlEmpty.lib" /MACHINE:X86 Debug\Abstractgame.obj
          Debug\Block0.obj
          Debug\Collisionhandler.obj
          Debug\Entity.obj
@@ -23,9 +37,9 @@
          Debug\Terrainhandler.obj
          Debug\Toolbox.obj
          Debug\Worm.obj
-         SfmlEmpty.vcxproj -> \\hsnas6\StudentHome\2014\a14alehu\Desktop\GitHub\Livia-game-2.0\Debug\SfmlEmpty.exe
-     1>Done Building Project "\\hsnas6\StudentHome\2014\a14alehu\Desktop\GitHub\Livia-game-2.0\SfmlEmpty\SfmlEmpty.vcxproj" (Build target(s)).
+         SfmlEmpty.vcxproj -> P:\Documents\GitHub\Livia-game-2.0\Debug\SfmlEmpty.exe
+     1>Done Building Project "P:\Documents\GitHub\Livia-game-2.0\SfmlEmpty\SfmlEmpty.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:04.74
+Time Elapsed 00:00:10.68

@@ -23,3 +23,7 @@ void Worm::update(){
 void Worm::addVector(sf::Vector2f &vector){
 
 }
+
+void Worm::collided(std::string &direction) {
+
+}

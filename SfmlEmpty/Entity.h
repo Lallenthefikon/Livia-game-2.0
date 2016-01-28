@@ -15,5 +15,6 @@ public:
 	virtual float getWidth() = 0;
 	virtual float getHeight() = 0;
 	virtual bool isOnScreen() = 0;
+	virtual void collided(std::string &direction) = 0;
 };
 

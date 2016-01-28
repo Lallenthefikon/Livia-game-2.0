@@ -11,5 +11,7 @@ public:
 	virtual void render(sf::RenderWindow &window) = 0;
 	virtual void update() = 0;
 	virtual sf::Vector2f getPos() = 0;
+	virtual float getWidth() = 0;
+	virtual float getHeight() = 0;
 };
 

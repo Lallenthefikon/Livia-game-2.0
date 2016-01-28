@@ -11,12 +11,13 @@ public:
 	static Terrain* createBlock0(sf::Vector2f pos);
 	virtual void render(sf::RenderWindow &window);
 	virtual void update();
-	virtual sf::Vector2f getPos(){ return mPosition; }
+	virtual sf::Vector2f getPos(){ return mSprite.getPosition(); }
 	virtual float getWidth(){ return mSprite.getGlobalBounds().width; }
 	virtual float getHeight(){ return mSprite.getGlobalBounds().height; }
+	virtual bool isOnScreen(){ return mIsOnScreen; }
 private:
 	Block0(sf::Vector2f pos);
-	sf::Vector2f mPosition;
 	sf::Sprite mSprite;
+	bool mIsOnScreen = true;
 };
 

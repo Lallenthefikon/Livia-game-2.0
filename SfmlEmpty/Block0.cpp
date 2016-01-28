@@ -1,10 +1,9 @@
 #include "Block0.h"
 
-Block0::Block0(sf::Vector2f pos) :
-mPosition(pos){
+Block0::Block0(sf::Vector2f pos){
 	mSprite.setTexture(Toolbox::getTexture(Toolbox::BLOCK0TEXTURE));
 	sf::Vector2f spriteOffset(mSprite.getLocalBounds().width / 2, mSprite.getLocalBounds().height / 2);
-	mSprite.setPosition(mPosition - spriteOffset);
+	mSprite.setPosition(pos - spriteOffset);
 }
 
 Block0::~Block0(){

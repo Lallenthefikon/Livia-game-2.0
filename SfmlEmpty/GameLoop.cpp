@@ -29,6 +29,7 @@ void GameLoop::updateState(){
 	}
 	else if (mapEditing){
 		mCurrentState = MapEditor::getInstance(mCurrentMap);
+		MapEditMaploader::getInstance(mCurrentMap).loadMap(mCurrentMap);
 	}
 }
 

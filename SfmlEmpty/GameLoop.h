@@ -8,6 +8,7 @@
 #include "Toolbox.h"
 #include "GameRun.h"
 #include "MapEditor.h"
+#include "MapEditMaploader.h"
 
 class GameLoop : public Abstractgame{
 public:

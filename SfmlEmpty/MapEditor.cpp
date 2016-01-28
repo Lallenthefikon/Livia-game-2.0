@@ -3,17 +3,16 @@
 #include <fstream>
 #include <sstream>
 
-MapEditor::MapEditor(std::string mapName):
+MapEditor::MapEditor(std::string &mapName):
 mInsertType(BLOCK0),
-mMapname(mapName){
+mCurrentMap(mapName){
 	Toolbox::loadTextures();
 }
 
 MapEditor::~MapEditor(){
-	//MapEditor::saveMap();
 }
 
-MapEditor* MapEditor::getInstance(std::string mapName){
+MapEditor* MapEditor::getInstance(std::string &mapName){
 	static MapEditor mapeditor(mapName);
 	return &mapeditor;
 }
@@ -130,19 +129,29 @@ void MapEditor::createPlayer(sf::Vector2f mousePos){
 	
 }
 
+void MapEditor::setCurrentMap(std::string &mapname){
+	mCurrentMap = mapname;
+}
+
+void MapEditor::clearMap(){
+	MapEditor::internalClear();
+}
+
+
+// Privates
 void MapEditor::createWorm(sf::Vector2f mousePos){
 	mEntities.push_back(Factory::createWorm(mousePos));
 }
 
 void MapEditor::saveMap(){
 
-	mMapname[15] = 'T';
-	MapEditor::writeTerrainToFile(mMapname);
+	mCurrentMap[15] = 'T';
+	MapEditor::writeTerrainToFile(mCurrentMap);
 
-	mMapname[15] = 'E';
-	MapEditor::writeEntityToFile(mMapname);
+	mCurrentMap[15] = 'E';
+	MapEditor::writeEntityToFile(mCurrentMap);
 
-	mMapname[15] = 'm';
+	mCurrentMap[15] = 'm';
 
 }
 
@@ -241,6 +250,18 @@ void MapEditor::writeEntityToFile(std::string filename){
 		}
 	}
 	entityFile.close();
+}
+
+void MapEditor::internalClear(){
+	while (!mEntities.empty()){
+		delete mEntities.back();
+		mEntities.pop_back();
+	}
+
+	while (!mTerrains.empty()){
+		delete mTerrains.back();
+		mTerrains.pop_back();
+	}
 }
 
 std::string MapEditor::floatToString(float f){

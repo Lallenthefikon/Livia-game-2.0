@@ -1,15 +1,15 @@
 #include "Player.h"
+#include <iostream>
 
-static float SPEED = 30;
 static float timeElapsed = 0.1666666666666667;
 static float jumpVelocity = -300;
 
 Player::Player(sf::Vector2f pos) :
-mPosition(pos){
+mPlayerSpeed(30){
 
 	mSprite.setTexture(Toolbox::getTexture(Toolbox::PLAYERTEXTURE));
 	sf::Vector2f spriteOffset(mSprite.getLocalBounds().width / 2, mSprite.getLocalBounds().height / 2);
-	mSprite.setPosition(mPosition - spriteOffset);
+	mSprite.setPosition(pos - spriteOffset);
 }
 
 
@@ -26,6 +26,9 @@ void Player::render(sf::RenderWindow &window){
 
 void Player::update(){
 	move();
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::M)){
+		showCoords();
+	}
 }
 
 void Player::move() {
@@ -60,23 +63,24 @@ float Player::lerp(float goal, float current, float delta) {
 		return current - delta;
 	}
 
+	// Max velocity
 	return goal;
 }
 
 void Player::accelerateUp(){
 	// Adds velocity in four directions
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
-		mVelocityGoal.y = SPEED * -1;
+		mVelocityGoal.y = mPlayerSpeed * -1;
 	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
-		mVelocityGoal.y = SPEED * 1;
+		mVelocityGoal.y = mPlayerSpeed * 1;
 	}
 	// Left and right
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-		mVelocityGoal.x = SPEED * -1;
+		mVelocityGoal.x = mPlayerSpeed * -1;
 	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-		mVelocityGoal.x = SPEED * 1;
+		mVelocityGoal.x = mPlayerSpeed * 1;
 	}
 }
 
@@ -99,4 +103,8 @@ void Player::accelerateDown(){
 
 void Player::addVector(sf::Vector2f &vector){
 	mGravity = vector;
+}
+
+void Player::showCoords(){
+	std::cout << "X: " << mSprite.getPosition().x << " Y: " << mSprite.getPosition().y << std::endl;
 }

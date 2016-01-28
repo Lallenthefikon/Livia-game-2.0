@@ -13,5 +13,6 @@ public:
 	virtual sf::Vector2f getPos() = 0;
 	virtual float getWidth() = 0;
 	virtual float getHeight() = 0;
+	virtual bool isOnScreen() = 0;
 };
 

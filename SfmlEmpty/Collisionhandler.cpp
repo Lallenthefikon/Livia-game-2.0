@@ -1,6 +1,4 @@
 #include "Collisionhandler.h"
-#include <iostream>
-
 
 Collisionhandler::Collisionhandler(){
 }
@@ -23,8 +21,10 @@ void Collisionhandler::collisionBetweenEntities(Entities &entities){
 		Entity *e0 = entities[i];
 		for (Entities::size_type j = i + 1; j < entities.size(); j++){
 			Entity *e1 = entities[j];
-			if (hasCollided(e0, e1)){
-				
+			if (e0->isOnScreen() && e1->isOnScreen()) {
+				if (hasCollided(e0, e1)) {
+					
+				}
 			}
 		}
 	}
@@ -35,8 +35,10 @@ void Collisionhandler::collisionBetweenEntitiesAndTerrains(Entities &entities, T
 		Entity *e0 = entities[i];
 		for (Terrains::size_type j = 0; j < terrains.size(); j++){
 			Terrain *e1 = terrains[j];
-			if (hasCollided(e0, e1)){
-				
+			if (e0->isOnScreen() && e1->isOnScreen()) {
+				if (hasCollided(e0, e1)) {
+					
+				}
 			}
 		}
 	}
@@ -44,19 +46,21 @@ void Collisionhandler::collisionBetweenEntitiesAndTerrains(Entities &entities, T
 
 bool Collisionhandler::hasCollided(Entity *e0, Entity *e1) {
 
-	float e0Left = e0->getPos().x - e0->getWidth() / 2;
-	float e0Right = e0->getPos().x + e0->getWidth() / 2;
-	float e0Top = e0->getPos().y - e0->getHeight() / 2;
-	float e0Bottom = e0->getPos().y + e0->getHeight() / 2;
+	float e0Left = e0->getPos().x;
+	float e0Right = e0->getPos().x + e0->getWidth();
+	float e0Top = e0->getPos().y;
+	float e0Bottom = e0->getPos().y + e0->getHeight();
 
-	float e1Left = e1->getPos().x - e1->getWidth() / 2;
-	float e1Right = e1->getPos().x + e1->getWidth() / 2;
-	float e1Top = e1->getPos().y - e1->getHeight() / 2;
-	float e1Bottom = e1->getPos().y + e1->getHeight() / 2;
+	float e1Left = e1->getPos().x;
+	float e1Right = e1->getPos().x + e1->getWidth();
+	float e1Top = e1->getPos().y;
+	float e1Bottom = e1->getPos().y + e1->getHeight();
 
 	// Has collided if all conditions are met
-	if (e0Left < e1Right && e0Right > e1Left &&
-		e0Top < e1Bottom && e0Bottom > e1Top) {
+	if (e0Left < e1Right &&
+		e0Right > e1Left &&
+		e0Top < e1Bottom &&
+		e0Bottom > e1Top) {
 		return true;
 	}
 	else {
@@ -66,15 +70,15 @@ bool Collisionhandler::hasCollided(Entity *e0, Entity *e1) {
 
 bool Collisionhandler::hasCollided(Entity *e0, Terrain *e1) {
 
-	float e0Left = e0->getPos().x - e0->getWidth() / 2;
-	float e0Right = e0->getPos().x + e0->getWidth() / 2;
-	float e0Top = e0->getPos().y - e0->getHeight() / 2;
-	float e0Bottom = e0->getPos().y + e0->getHeight() / 2;
+	float e0Left = e0->getPos().x;
+	float e0Right = e0->getPos().x + e0->getWidth();
+	float e0Top = e0->getPos().y;
+	float e0Bottom = e0->getPos().y + e0->getHeight();
 
-	float e1Left = e1->getPos().x - e1->getWidth() / 2;
-	float e1Right = e1->getPos().x + e1->getWidth() / 2;
-	float e1Top = e1->getPos().y - e1->getHeight() / 2;
-	float e1Bottom = e1->getPos().y + e1->getHeight() / 2;
+	float e1Left = e1->getPos().x;
+	float e1Right = e1->getPos().x + e1->getWidth();
+	float e1Top = e1->getPos().y;
+	float e1Bottom = e1->getPos().y + e1->getHeight();
 
 	// Has collided if all conditions are met
 	if (e0Left < e1Right && e0Right > e1Left &&

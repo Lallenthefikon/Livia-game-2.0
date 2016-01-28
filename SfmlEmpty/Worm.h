@@ -11,13 +11,14 @@ public:
 	static Entity* createWorm(sf::Vector2f pos);
 	virtual void render(sf::RenderWindow &window);
 	virtual void update();
-	virtual sf::Vector2f getPos(){ return mPosition; }
+	virtual sf::Vector2f getPos(){ return mSprite.getPosition(); }
 	virtual float getWidth(){ return mSprite.getGlobalBounds().width; }
 	virtual float getHeight(){ return mSprite.getGlobalBounds().height; }
 	virtual void addVector(sf::Vector2f &vector);
+	virtual bool isOnScreen(){ return mIsOnScreen; }
 private:
 	sf::Sprite mSprite;
 	Worm(sf::Vector2f pos);
-	sf::Vector2f mPosition;
+	bool mIsOnScreen = true;
 };
 

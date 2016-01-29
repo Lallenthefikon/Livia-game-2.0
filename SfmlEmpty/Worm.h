@@ -18,6 +18,7 @@ public:
 	virtual void addVector(sf::Vector2f &vector);
 	virtual bool isOnScreen(){ return mIsOnScreen; }
 	virtual void collided(std::string &direction);
+	virtual void correctPosition(sf::Vector2f &direction);
 private:
 	sf::Sprite mSprite;
 	sf::Vector2f mSpriteOffset;

@@ -16,5 +16,7 @@ private:
 	void collisionBetweenEntitiesAndTerrains(Entities &entities, Terrains &terrains);
 	bool hasCollided(Entity *e0, Entity *e1);
 	bool hasCollided(Entity *e0, Terrain *e1);
+	void collisionDirection(Entity *e0, Entity *e1);
+	void collisionDirection(Entity *e0, Terrain *e1);
 };
 

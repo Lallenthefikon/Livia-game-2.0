@@ -109,6 +109,10 @@ void Player::showCoords(){
 	std::cout << "X: " << mSprite.getPosition().x << " Y: " << mSprite.getPosition().y << std::endl;
 }
 
-void Player::collided(std::string &direction) {
+void Player::collided(std::string &direction){
 
+}
+
+void Player::correctPosition(sf::Vector2f &vector){
+	mVelocity = mPlayerSpeed * vector;
 }

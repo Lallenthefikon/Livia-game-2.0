@@ -25,6 +25,10 @@ void Worm::addVector(sf::Vector2f &vector){
 
 }
 
-void Worm::collided(std::string &direction) {
+void Worm::collided(std::string &direction){
+
+}
+
+void Worm::correctPosition(sf::Vector2f &direction){
 
 }

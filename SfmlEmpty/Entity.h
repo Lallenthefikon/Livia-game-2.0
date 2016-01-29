@@ -17,5 +17,6 @@ public:
 	virtual float getHeight() = 0;
 	virtual bool isOnScreen() = 0;
 	virtual void collided(std::string &direction) = 0;
+	virtual void correctPosition(sf::Vector2f &direction) = 0;
 };
 

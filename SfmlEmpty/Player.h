@@ -18,6 +18,7 @@ public:
 	virtual void addVector(sf::Vector2f &vector);
 	virtual bool isOnScreen(){ return mIsOnScreen; }
 	virtual void collided(std::string &direction);
+	virtual void correctPosition(sf::Vector2f &direction);
 private:
 	Player(sf::Vector2f pos);
 	void move();
@@ -25,13 +26,13 @@ private:
 	void accelerateUp();
 	void accelerateDown();
 	void showCoords();
-	sf::Vector2f mGravity, mVelocity = sf::Vector2f(0, 0), mVelocityGoal = sf::Vector2f(0, 0);
+	sf::Vector2f mGravity, 
+		mVelocity = sf::Vector2f(0, 0), 
+		mVelocityGoal = sf::Vector2f(0, 0),
+		mPosition,
+		mSpriteOffset;
 	sf::Sprite mSprite;
-	sf::Vector2f mPosition;
-	sf::Vector2f mSpriteOffset;
 	float mPlayerSpeed;
 	bool mIsOnScreen = true;
-	
-
 };
 

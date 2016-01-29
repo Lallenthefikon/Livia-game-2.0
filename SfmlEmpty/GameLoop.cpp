@@ -7,6 +7,7 @@ mWindow(sf::VideoMode(640, 480), "SFML Application"),
 mAmbienceBuffer(),
 mAmbienceSound() {
 	mWindow.setVerticalSyncEnabled(true);
+	mWindow.setKeyRepeatEnabled(false);
 	updateState();
 }
 
@@ -53,13 +54,11 @@ void GameLoop::manualStateChange(int &i){
 
 void GameLoop::run(){
 	
-	
 	mAmbienceBuffer.loadFromFile("resources/sounds/Ambient_Stomach.ogg");
 	mAmbienceSound.setBuffer(mAmbienceBuffer);
 	mAmbienceSound.setLoop(true);
 	mAmbienceSound.play();
 
-	mWindow.setKeyRepeatEnabled(false);
 
 	int clickOnce = 0;
 

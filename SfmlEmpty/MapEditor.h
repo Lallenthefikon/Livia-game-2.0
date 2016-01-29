@@ -33,7 +33,7 @@ private:
 	MapEditor(std::string &mapName);
 	~MapEditor();
 
-	void insertObjekt(sf::Vector2f mousePos);
+	void insertObject(sf::Vector2f mousePos);
 	void changeInsertType();
 
 	void saveMap();

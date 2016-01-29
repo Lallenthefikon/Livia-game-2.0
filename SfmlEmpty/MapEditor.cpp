@@ -36,7 +36,7 @@ void MapEditor::update(sf::RenderWindow &window){
 			switch (gEvent.mouseButton.button){
 
 			case sf::Mouse::Left:
-				MapEditor::insertObjekt(sf::Vector2f(xPos, yPos));
+				MapEditor::insertObject(sf::Vector2f(xPos, yPos));
 				break;
 
 				// Not done
@@ -122,7 +122,7 @@ void MapEditor::clearMap(){
 
 // Privates
 
-void MapEditor::insertObjekt(sf::Vector2f mousePos){
+void MapEditor::insertObject(sf::Vector2f mousePos) {
 	switch (mInsertType){
 	case BLOCK0:
 		MapEditor::createBlock0(mousePos);

@@ -93,6 +93,7 @@ bool Collisionhandler::hasCollided(Entity *e0, Terrain *e1) {
 	}
 }
 
+// Collision between entities
 void Collisionhandler::collisionDirection(Entity *e0, Entity *e1) {
 	float e0Left = e0->getPos().x;
 	float e0Right = e0->getPos().x + e0->getWidth();
@@ -131,6 +132,7 @@ void Collisionhandler::collisionDirection(Entity *e0, Entity *e1) {
 	}
 }
 
+// Collision between an entity and a terrain
 void Collisionhandler::collisionDirection(Entity *e0, Terrain *e1) {
 	float e0Left = e0->getPos().x;
 	float e0Right = e0->getPos().x + e0->getWidth();

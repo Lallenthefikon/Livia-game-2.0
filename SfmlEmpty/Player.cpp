@@ -45,7 +45,7 @@ void Player::move() {
 	mSprite.move((mVelocity + mGravity) * timeElapsed);
 
 	// Keeps the player above the bottom, ####TEMPORARY####
-	if (mSprite.getPosition().y > 360) mSprite.setPosition(mSprite.getPosition().x, 360);
+	if (mSprite.getPosition().y > 960) mSprite.setPosition(mSprite.getPosition().x, 960);
 
 	accelerateDown();
 	

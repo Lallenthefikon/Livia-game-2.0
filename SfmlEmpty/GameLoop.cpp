@@ -3,7 +3,7 @@
 
 GameLoop::GameLoop():
 mCurrentMap("resources/maps/mMap0.txt"),
-mWindow(sf::VideoMode(640, 480), "SFML Application"),
+mWindow(sf::VideoMode(1920,1080), "SFML Application", sf::Style::Fullscreen),
 mAmbienceBuffer(),
 mAmbienceSound() {
 	mWindow.setVerticalSyncEnabled(true);
@@ -65,7 +65,7 @@ void GameLoop::run(){
 	sf::Clock clock;
 
 	// Loop
-	while (mWindow.isOpen()){
+	while (mWindow.isOpen() && !sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)){
 		manualStateChange(clickOnce);
 		update();
 		render();

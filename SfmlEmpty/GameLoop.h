@@ -30,6 +30,6 @@ private:
 	sf::Sound mAmbienceSound;
 	float mTimeElapsed;
 	int FPS;
-	bool gameRunning, mapEditing = true;
+	bool gameRunning = true, mapEditing;
 };
 

@@ -6,8 +6,9 @@ static float jumpVelocity = -300;
 
 Player::Player(sf::Vector2f pos) :
 mPlayerSpeed(30),
-mSpriteOffset(mSprite.getLocalBounds().width / 2, mSprite.getLocalBounds().height / 2){
+mSpriteOffset(){
 	mSprite.setTexture(Toolbox::getTexture(Toolbox::PLAYERTEXTURE));
+	mSpriteOffset = sf::Vector2f(mSprite.getGlobalBounds().width / 2, mSprite.getGlobalBounds().height / 2);
 	mSprite.setPosition(pos - mSpriteOffset);
 }
 
@@ -41,7 +42,6 @@ void Player::move() {
 	mVelocity.y = lerp(mVelocityGoal.y, mVelocity.y, timeElapsed * 100);
 
 	// Updates the player's position
-
 	mSprite.move((mVelocity + mGravity) * timeElapsed);
 
 	// Keeps the player above the bottom, ####TEMPORARY####
@@ -72,16 +72,18 @@ void Player::accelerateUp(){
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
 		mVelocityGoal.y = mPlayerSpeed * -1;
 	}
-	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
 		mVelocityGoal.y = mPlayerSpeed * 1;
-	}
+	}	
+
 	// Left and right
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
 		mVelocityGoal.x = mPlayerSpeed * -1;
 	}
-	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
 		mVelocityGoal.x = mPlayerSpeed * 1;
 	}
+
 }
 
 void Player::accelerateDown(){
@@ -92,6 +94,7 @@ void Player::accelerateDown(){
 	else if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
 		mVelocityGoal.y = 0;
 	}
+
 	// Left and right
 	if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
 		mVelocityGoal.x = 0;
@@ -109,10 +112,6 @@ void Player::showCoords(){
 	std::cout << "X: " << mSprite.getPosition().x << " Y: " << mSprite.getPosition().y << std::endl;
 }
 
-void Player::collided(std::string &direction){
-
-}
-
-void Player::correctPosition(sf::Vector2f &vector){
-	mVelocity = mPlayerSpeed * vector;
+void Player::setPos(sf::Vector2f &newPos) {
+	mSprite.move(newPos * mPlayerSpeed * timeElapsed);
 }

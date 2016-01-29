@@ -11,9 +11,9 @@ Toolbox& Toolbox::getInstance(){
 }
 
 void Toolbox::loadTextures(){
-	mWormtexture.loadFromFile("resources/images/Worm.png");
+	mWormtexture.loadFromFile("resources/images/Mask.png");
 	mBlock0texture.loadFromFile("resources/images/Block0.png");
-	mPlayertexture.loadFromFile("resources/images/Player.png");
+	mPlayertexture.loadFromFile("resources/images/Livia test run_00022.png");
 }
 
 sf::Texture& Toolbox::getTexture(TEXTUREKEY textureKey){

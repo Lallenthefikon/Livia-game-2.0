@@ -15,10 +15,10 @@ public:
 	virtual sf::Vector2f getOffset(){ return mSpriteOffset; }
 	virtual float getWidth(){ return mSprite.getGlobalBounds().width; }
 	virtual float getHeight(){ return mSprite.getGlobalBounds().height; }
-	virtual void addVector(sf::Vector2f &vector);
 	virtual bool isOnScreen(){ return mIsOnScreen; }
-	virtual void collided(std::string &direction);
-	virtual void correctPosition(sf::Vector2f &direction);
+	virtual void addVector(sf::Vector2f &vector);
+	virtual void setPos(sf::Vector2f &newPos);
+	
 private:
 	sf::Sprite mSprite;
 	sf::Vector2f mSpriteOffset;

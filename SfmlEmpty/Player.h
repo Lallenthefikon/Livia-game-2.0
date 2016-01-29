@@ -17,7 +17,7 @@ public:
 	virtual float getHeight(){ return mSprite.getLocalBounds().height; }
 	virtual bool isOnScreen(){ return mIsOnScreen; }
 	virtual void addVector(sf::Vector2f &vector);
-	virtual void setPos(sf::Vector2f &newPos);
+	virtual void move(sf::Vector2f &direction);
 private:
 	Player(sf::Vector2f pos);
 	void move();
@@ -33,5 +33,6 @@ private:
 	sf::Sprite mSprite;
 	float mPlayerSpeed;
 	bool mIsOnScreen = true;
+	sf::RectangleShape mSpriteOutline;
 };
 

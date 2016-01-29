@@ -23,7 +23,7 @@ void Collisionhandler::collisionBetweenEntities(Entities &entities){
 			Entity *e1 = entities[j];
 			if (e0->isOnScreen() && e1->isOnScreen()) {
 				if (hasCollided(e0, e1)) {
-					if (e0->getType() != e1->getType() && e1->getType() == Entity::WORM) {
+					if (e0->getType() != e1->getType() && e0->getType() == Entity::PLAYER) {
 						collisionDirection(e0, e1);
 						//collisionDirection(e1, e0);
 					}
@@ -112,23 +112,23 @@ void Collisionhandler::collisionDirection(Entity *e0, Entity *e1) {
 
 	// Checks if deltaTopCollision is the smallest value, 
 	if (deltaTopCollision < deltaBottomCollision && deltaTopCollision < deltaLeftCollision && deltaTopCollision < deltaRightCollision) {
-		// Top collision
-	
+		// Top collision, e0 collided with e1's top edge
+		e0->move(sf::Vector2f(0, -1));
 	}
 	// Checks if deltaBottomCollision is the smallest value
 	if (deltaBottomCollision < deltaTopCollision && deltaBottomCollision < deltaLeftCollision && deltaBottomCollision < deltaRightCollision) {
 		// Bottom collision
-		
+		e0->move(sf::Vector2f(0, 1));
 	}
 	// Checks if deltaLeftCollision is the smallest value
 	if (deltaLeftCollision < deltaRightCollision && deltaLeftCollision < deltaTopCollision && deltaLeftCollision < deltaBottomCollision) {
 		// Left collision
-		
+		e0->move(sf::Vector2f(-1, 0));
 	}
 	// Checks if deltaRightCollision is the smallest value	
 	if (deltaRightCollision < deltaLeftCollision && deltaRightCollision < deltaTopCollision && deltaRightCollision < deltaBottomCollision) {
 		// Right collision
-		
+		e0->move(sf::Vector2f(1, 0));
 	}
 }
 
@@ -152,21 +152,21 @@ void Collisionhandler::collisionDirection(Entity *e0, Terrain *e1) {
 	// Checks if deltaTopCollision is the smallest value, 
 	if (deltaTopCollision < deltaBottomCollision && deltaTopCollision < deltaLeftCollision && deltaTopCollision < deltaRightCollision) {
 		// Top collision, e0 collided with e1's top edge
-		e0->setPos(sf::Vector2f(0, -1));
+		e0->move(sf::Vector2f(0, -1));
 	}
 	// Checks if deltaBottomCollision is the smallest value
 	if (deltaBottomCollision < deltaTopCollision && deltaBottomCollision < deltaLeftCollision && deltaBottomCollision < deltaRightCollision) {
 		// Bottom collision
-		e0->setPos(sf::Vector2f(0, 1));
+		e0->move(sf::Vector2f(0, 1));
 	}
 	// Checks if deltaLeftCollision is the smallest value
 	if (deltaLeftCollision < deltaRightCollision && deltaLeftCollision < deltaTopCollision && deltaLeftCollision < deltaBottomCollision) {
 		// Left collision
-		e0->setPos(sf::Vector2f(-1, 0));
+		e0->move(sf::Vector2f(-1, 0));
 	}
 	// Checks if deltaRightCollision is the smallest value	
 	if (deltaRightCollision < deltaLeftCollision && deltaRightCollision < deltaTopCollision && deltaRightCollision < deltaBottomCollision) {
 		// Right collision
-		e0->setPos(sf::Vector2f(1, 0));
+		e0->move(sf::Vector2f(1, 0));
 	}
 }

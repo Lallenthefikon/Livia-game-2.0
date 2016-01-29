@@ -59,7 +59,6 @@ void GameLoop::run(){
 	mAmbienceSound.setLoop(true);
 	mAmbienceSound.play();
 
-
 	int clickOnce = 0;
 
 	sf::Clock clock;

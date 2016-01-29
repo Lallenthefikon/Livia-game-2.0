@@ -17,12 +17,12 @@ public:
 	virtual float getHeight(){ return mSprite.getGlobalBounds().height; }
 	virtual bool isOnScreen(){ return mIsOnScreen; }
 	virtual void addVector(sf::Vector2f &vector);
-	virtual void setPos(sf::Vector2f &newPos);
-	
+	virtual void move(sf::Vector2f &direction);
 private:
 	sf::Sprite mSprite;
 	sf::Vector2f mSpriteOffset;
 	Worm(sf::Vector2f pos);
 	bool mIsOnScreen = true;
+	sf::RectangleShape mSpriteOutline;
 };
 

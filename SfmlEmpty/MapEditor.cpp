@@ -4,11 +4,15 @@
 #include <sstream>
 
 MapEditor::MapEditor(std::string &mapName):
+mMapDimensionsTiles(50, 50),
+mTileDimensions(70.f, 70.f),
 mInsertType(BLOCK0),
 mCurrentMap(mapName),
 mMaploader(MapEditMaploader::getInstance()){
+
 	Toolbox::loadTextures();
 	MapEditor::loadMap();
+	MapEditor::createGrid();
 }
 
 MapEditor::~MapEditor(){
@@ -33,14 +37,36 @@ void MapEditor::update(sf::RenderWindow &window){
 			int xPos = sf::Mouse::getPosition(window).x;
 			int yPos = sf::Mouse::getPosition(window).y;
 
+			sf::Sprite clickedTile;
 			switch (gEvent.mouseButton.button){
 
 			case sf::Mouse::Left:
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift))
 				MapEditor::insertObject(sf::Vector2f(xPos, yPos));
+				else{
+					clickedTile = determineSelectedTileInGrid(sf::Mouse::getPosition(window), &mGrid);
+					// Offset applied in all tiles, counteroffset needed here to match grid.
+					MapEditor::insertObject(sf::Vector2f(
+						clickedTile.getPosition().x
+						, clickedTile.getPosition().y));
+				}
 				break;
 
-				// Not done
+				
 			case sf::Mouse::Right:
+				for (int i = mEntities.size() - 1; i > -1; i--){
+					if (MapEditor::isSpriteClicked(mEntities[i]->getSprite(), &sf::Mouse::getPosition(window))){
+						MapEditor::eraseEntity(i);
+						break;
+					}
+				}
+				for (int i = mTerrains.size() - 1; i > -1; i--){
+					if (MapEditor::isSpriteClicked(mTerrains[i]->getSprite(), &sf::Mouse::getPosition(window))){
+ 						MapEditor::eraseTerrain(i);
+						break;
+					}
+				}
+
 				break;
 
 			case sf::Mouse::Middle:
@@ -57,7 +83,10 @@ void MapEditor::update(sf::RenderWindow &window){
 			case sf::Keyboard::S:
 				MapEditor::saveMap();
 				break;
-
+			case sf::Keyboard::Delete:
+				MapEditor::internalClear();
+				break;
+				
 			default:
 				break;
 			}
@@ -68,6 +97,10 @@ void MapEditor::update(sf::RenderWindow &window){
 void MapEditor::render(sf::RenderWindow &window){
 	window.clear();
 
+	for (size_t i = 0; i < mGrid.size(); i++){
+		window.draw(mGrid[i]);
+	}
+
 	for (Terrains::size_type i = 0; i < mTerrains.size(); i++){
 		mTerrains[i]->render(window);
 	}
@@ -75,7 +108,6 @@ void MapEditor::render(sf::RenderWindow &window){
 	for (Entities::size_type i = 0; i < mEntities.size(); i++){
 		mEntities[i]->render(window);
 	}
-
 	window.display();
 }
 
@@ -136,6 +168,16 @@ void MapEditor::insertObject(sf::Vector2f mousePos) {
 	default:
 		break;
 	}
+}
+
+void MapEditor::eraseEntity(int index){
+	delete mEntities[index];
+	mEntities.erase(mEntities.begin() + index);
+}
+
+void MapEditor::eraseTerrain(int index){
+	delete mTerrains[index];
+	mTerrains.erase(mTerrains.begin() + index);
 }
 
 void MapEditor::changeInsertType(){
@@ -280,4 +322,52 @@ std::string MapEditor::floatToString(float f){
 	ss << f;
 	std::string pos(ss.str());
 	return pos;
+}
+
+void MapEditor::createGrid(){
+	sf::Vector2f lastTilePos(-mTileDimensions.x, -mTileDimensions.y);
+	//std::vector<sf::Sprite> tiles;
+
+	for (size_t i = 0; i < mMapDimensionsTiles.x; i++){
+		sf::Vector2f tilePos(0, 0);
+		tilePos.x = lastTilePos.x;
+		tilePos.x += mTileDimensions.x;
+
+		sf::Sprite xTile;
+		xTile.setTexture(Toolbox::getTexture(Toolbox::TILETEXTURE));
+		xTile.setPosition(tilePos);
+
+		mGrid.push_back(xTile);
+		//std::cout << "X: " << xTile.getPosition().x << std::endl << "Y: " << xTile.getPosition().y << std::endl << std::endl;
+
+		for (size_t j = 0; j < mMapDimensionsTiles.y - 1; j++){
+			tilePos.y += mTileDimensions.y;
+
+			sf::Sprite yTile;
+			yTile.setTexture(Toolbox::getTexture(Toolbox::TILETEXTURE));
+			yTile.setPosition(tilePos);
+			mGrid.push_back(yTile);
+
+			lastTilePos = tilePos;
+			//std::cout << "X: " << yTile.getPosition().x << std::endl << "Y: " << yTile.getPosition().y << std::endl << std::endl;
+		}
+		lastTilePos.y = 0;
+		lastTilePos.x = tilePos.x;
+	}
+	std::cout << "Tiles created: " << mGrid.size() << std::endl;
+}
+// Ludvig
+sf::Sprite MapEditor::determineSelectedTileInGrid(sf::Vector2i position, std::vector<sf::Sprite> *grid){
+	for (size_t i = 0; i < grid->size(); i++){
+		if (isSpriteClicked(grid->at(i), &position)){
+			return grid->at(i);
+		}
+	}
+}
+// Ludvig
+bool MapEditor::isSpriteClicked(sf::Sprite spr, sf::Vector2i *mousePos){
+	return mousePos->x > spr.getPosition().x
+		&& mousePos->x < spr.getPosition().x + spr.getLocalBounds().width
+		&& mousePos->y > spr.getPosition().y
+		&& mousePos->y < spr.getPosition().y + spr.getLocalBounds().height;
 }

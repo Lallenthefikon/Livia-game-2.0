@@ -19,9 +19,9 @@ public:
 
 	virtual void update(sf::RenderWindow &window);
 	virtual void render(sf::RenderWindow &window);
-
-	void createPlayer(sf::Vector2f mousePos);
+	
 	void createBlock0(sf::Vector2f mousePos);
+	void createPlayer(sf::Vector2f mousePos);
 	void createWorm(sf::Vector2f mousePos);
 
 	virtual void setCurrentMap(std::string &mapname){ mCurrentMap = mapname; }
@@ -29,11 +29,15 @@ public:
 
 	void clearMap();
 
+	std::vector<sf::Sprite> mGrid;
+
 private:
 	MapEditor(std::string &mapName);
 	~MapEditor();
 
 	void insertObject(sf::Vector2f mousePos);
+	void eraseEntity(int index);
+	void eraseTerrain(int index);
 	void changeInsertType();
 
 	void saveMap();
@@ -42,6 +46,10 @@ private:
 	void internalClear();
 
 	std::string floatToString(float f);
+
+	void createGrid();
+	sf::Sprite determineSelectedTileInGrid(sf::Vector2i position, std::vector<sf::Sprite> *grid);
+	bool isSpriteClicked(sf::Sprite spr, sf::Vector2i *mousePos);
 
 	MapEditMaploader &mMaploader;
 
@@ -54,5 +62,8 @@ private:
 	Entities mEntities;
 	Terrains mTerrains;
 
+	sf::Vector2f mMapDimensionsPixels;
+	sf::Vector2f mMapDimensionsTiles;
+	sf::Vector2f mTileDimensions;
 };
 

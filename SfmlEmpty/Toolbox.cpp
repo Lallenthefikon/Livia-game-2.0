@@ -4,6 +4,7 @@
 static sf::Texture mWormtexture;
 static sf::Texture mBlock0texture;
 static sf::Texture mPlayertexture;
+static sf::Texture mTileTexture;
 
 Toolbox& Toolbox::getInstance(){
 	static Toolbox toolbox;
@@ -14,6 +15,7 @@ void Toolbox::loadTextures(){
 	mWormtexture.loadFromFile("resources/images/Mask.png");
 	mBlock0texture.loadFromFile("resources/images/Block0.png");
 	mPlayertexture.loadFromFile("resources/images/Livia test run_00022.png");
+	mTileTexture.loadFromFile("resources/images/Tile.png");
 }
 
 sf::Texture& Toolbox::getTexture(TEXTUREKEY textureKey){
@@ -29,6 +31,10 @@ sf::Texture& Toolbox::getTexture(TEXTUREKEY textureKey){
 
 	case PLAYERTEXTURE:
 		return mPlayertexture;
+		break;
+
+	case TILETEXTURE:
+		return mTileTexture;
 		break;
 
 	default:

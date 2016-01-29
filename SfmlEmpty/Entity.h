@@ -16,6 +16,7 @@ public:
 	virtual void addVector(sf::Vector2f &vector) = 0;
 	virtual float getWidth() = 0;
 	virtual float getHeight() = 0;
+	virtual sf::Sprite getSprite() = 0;
 	virtual bool isOnScreen() = 0;
 };
 

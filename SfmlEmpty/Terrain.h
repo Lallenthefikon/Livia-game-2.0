@@ -14,6 +14,7 @@ public:
 	virtual sf::Vector2f getOffset() = 0;
 	virtual float getWidth() = 0;
 	virtual float getHeight() = 0;
+	virtual sf::Sprite getSprite() = 0;
 	virtual bool isOnScreen() = 0;
 };
 

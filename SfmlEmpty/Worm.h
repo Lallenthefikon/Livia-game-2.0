@@ -15,6 +15,7 @@ public:
 	virtual sf::Vector2f getOffset(){ return mSpriteOffset; }
 	virtual float getWidth(){ return mSprite.getGlobalBounds().width; }
 	virtual float getHeight(){ return mSprite.getGlobalBounds().height; }
+	virtual sf::Sprite getSprite(){ return mSprite; }
 	virtual bool isOnScreen(){ return mIsOnScreen; }
 	virtual void addVector(sf::Vector2f &vector);
 	virtual void move(sf::Vector2f &direction);

@@ -25,6 +25,7 @@ private:
 	float lerp(float goal, float current, float delta);
 	void accelerateUp();
 	void accelerateDown();
+	void jump();
 	void showCoords();
 	sf::Vector2f mGravity, 
 		mVelocity = sf::Vector2f(0, 0), 
@@ -34,6 +35,7 @@ private:
 	sf::Sprite mSprite;
 	float mPlayerSpeed;
 	bool mIsOnScreen = true;
+	bool mGrounded = false;
 	sf::RectangleShape mSpriteOutline;
 };
 

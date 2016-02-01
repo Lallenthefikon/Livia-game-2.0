@@ -3,7 +3,7 @@
 
 GameLoop::GameLoop():
 mCurrentMap("resources/maps/mMap0.txt"),
-mWindow(sf::VideoMode(1920,1080), "SFML Application", sf::Style::Fullscreen),
+mWindow(sf::VideoMode(800, 800), "Livia 2.0.2 V.2"),
 mAmbienceBuffer(),
 mAmbienceSound() {
 	mWindow.setVerticalSyncEnabled(true);

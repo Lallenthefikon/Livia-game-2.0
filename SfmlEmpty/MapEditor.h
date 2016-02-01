@@ -7,14 +7,10 @@
 #include "Terrain.h"
 #include "Toolbox.h"
 #include "MapEditMaploader.h"
+#include "MapEditorMeny.h"
 
 class MapEditor : public GameState{
 public:
-
-	enum INSERTTYPE{BLOCK0,
-	PLAYER,
-	WORM};
-
 	static MapEditor* getInstance(std::string &mapName);
 
 	virtual void update(sf::RenderWindow &window);
@@ -49,11 +45,13 @@ private:
 
 	void createGrid();
 	sf::Sprite determineSelectedTileInGrid(sf::Vector2i position, std::vector<sf::Sprite> *grid);
-	bool isSpriteClicked(sf::Sprite spr, sf::Vector2i *mousePos);
+	bool isSpriteClicked(sf::Sprite& spr, sf::Vector2i *mousePos);
+
+	void updateInsertType();
 
 	MapEditMaploader &mMaploader;
 
-	INSERTTYPE mInsertType;
+	MapEditorMeny::INSERTTYPE mInsertType;
 	std::string mCurrentMap;
 
 	typedef std::vector<Entity*> Entities;
@@ -61,6 +59,7 @@ private:
 
 	Entities mEntities;
 	Terrains mTerrains;
+	MapEditorMeny& mMeny;
 
 	sf::Vector2f mMapDimensionsPixels;
 	sf::Vector2f mMapDimensionsTiles;

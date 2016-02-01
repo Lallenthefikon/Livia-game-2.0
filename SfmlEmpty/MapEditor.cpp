@@ -3,12 +3,13 @@
 #include <fstream>
 #include <sstream>
 
-MapEditor::MapEditor(std::string &mapName):
+MapEditor::MapEditor(std::string &mapName) :
 mMapDimensionsTiles(50, 50),
 mTileDimensions(70.f, 70.f),
-mInsertType(BLOCK0),
+mInsertType(MapEditorMeny::BLOCK0),
 mCurrentMap(mapName),
-mMaploader(MapEditMaploader::getInstance()){
+mMaploader(MapEditMaploader::getInstance()),
+mMeny(MapEditorMeny::getInstance()){
 
 	Toolbox::loadTextures();
 	MapEditor::loadMap();
@@ -34,47 +35,53 @@ void MapEditor::update(sf::RenderWindow &window){
 
 		if (gEvent.type == sf::Event::MouseButtonPressed){
 
-			int xPos = sf::Mouse::getPosition(window).x;
-			int yPos = sf::Mouse::getPosition(window).y;
+			if (mMeny.menyClicked(sf::Mouse::getPosition(window))){
+				MapEditor::updateInsertType();
+			}
 
-			sf::Sprite clickedTile;
-			switch (gEvent.mouseButton.button){
+			else{
+				int xPos = sf::Mouse::getPosition(window).x;
+				int yPos = sf::Mouse::getPosition(window).y;
 
-			case sf::Mouse::Left:
-				if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift))
-				MapEditor::insertObject(sf::Vector2f(xPos, yPos));
-				else{
-					clickedTile = determineSelectedTileInGrid(sf::Mouse::getPosition(window), &mGrid);
-					// Offset applied in all tiles, counteroffset needed here to match grid.
-					MapEditor::insertObject(sf::Vector2f(
-						clickedTile.getPosition().x
-						, clickedTile.getPosition().y));
-				}
-				break;
+				sf::Sprite clickedTile;
+				switch (gEvent.mouseButton.button){
 
-				
-			case sf::Mouse::Right:
-				for (int i = mEntities.size() - 1; i > -1; i--){
-					if (MapEditor::isSpriteClicked(mEntities[i]->getSprite(), &sf::Mouse::getPosition(window))){
-						MapEditor::eraseEntity(i);
-						break;
+				case sf::Mouse::Left:
+					if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift))
+						MapEditor::insertObject(sf::Vector2f(xPos, yPos));
+					else{
+						clickedTile = determineSelectedTileInGrid(sf::Mouse::getPosition(window), &mGrid);
+						// Offset applied in all tiles, counteroffset needed here to match grid.
+						MapEditor::insertObject(sf::Vector2f(
+							clickedTile.getPosition().x + clickedTile.getLocalBounds().width / 2
+							, clickedTile.getPosition().y + clickedTile.getLocalBounds().height / 2));
 					}
-				}
-				for (int i = mTerrains.size() - 1; i > -1; i--){
-					if (MapEditor::isSpriteClicked(mTerrains[i]->getSprite(), &sf::Mouse::getPosition(window))){
- 						MapEditor::eraseTerrain(i);
-						break;
+					break;
+
+
+				case sf::Mouse::Right:
+					for (int i = mEntities.size() - 1; i > -1; i--){
+						if (MapEditor::isSpriteClicked(mEntities[i]->getSprite(), &sf::Mouse::getPosition(window))){
+							MapEditor::eraseEntity(i);
+							break;
+						}
 					}
+					for (int i = mTerrains.size() - 1; i > -1; i--){
+						if (MapEditor::isSpriteClicked(mTerrains[i]->getSprite(), &sf::Mouse::getPosition(window))){
+							MapEditor::eraseTerrain(i);
+							break;
+						}
+					}
+
+					break;
+
+				case sf::Mouse::Middle:
+					MapEditor::changeInsertType();
+					break;
+
+				default:
+					break;
 				}
-
-				break;
-
-			case sf::Mouse::Middle:
-				MapEditor::changeInsertType();
-				break;
-
-			default:
-				break;
 			}
 		}
 
@@ -108,6 +115,8 @@ void MapEditor::render(sf::RenderWindow &window){
 	for (Entities::size_type i = 0; i < mEntities.size(); i++){
 		mEntities[i]->render(window);
 	}
+	mMeny.render(window);
+
 	window.display();
 }
 
@@ -156,13 +165,13 @@ void MapEditor::clearMap(){
 
 void MapEditor::insertObject(sf::Vector2f mousePos) {
 	switch (mInsertType){
-	case BLOCK0:
+	case MapEditorMeny::BLOCK0:
 		MapEditor::createBlock0(mousePos);
 		break;
-	case PLAYER:
+	case MapEditorMeny::PLAYER:
 		MapEditor::createPlayer(mousePos);
 		break;
-	case WORM:
+	case MapEditorMeny::WORM:
 		MapEditor::createWorm(mousePos);
 		break;
 	default:
@@ -182,14 +191,14 @@ void MapEditor::eraseTerrain(int index){
 
 void MapEditor::changeInsertType(){
 	switch (mInsertType){
-	case BLOCK0:
-		mInsertType = PLAYER;
+	case MapEditorMeny::BLOCK0:
+		mInsertType = MapEditorMeny::PLAYER;
 		break;
-	case PLAYER:
-		mInsertType = WORM;
+	case MapEditorMeny::PLAYER:
+		mInsertType = MapEditorMeny::WORM;
 		break;
-	case WORM:
-		mInsertType = BLOCK0;
+	case MapEditorMeny::WORM:
+		mInsertType = MapEditorMeny::BLOCK0;
 		break;
 	default:
 		break;
@@ -356,7 +365,7 @@ void MapEditor::createGrid(){
 	}
 	std::cout << "Tiles created: " << mGrid.size() << std::endl;
 }
-// Ludvig
+
 sf::Sprite MapEditor::determineSelectedTileInGrid(sf::Vector2i position, std::vector<sf::Sprite> *grid){
 	for (size_t i = 0; i < grid->size(); i++){
 		if (isSpriteClicked(grid->at(i), &position)){
@@ -364,10 +373,14 @@ sf::Sprite MapEditor::determineSelectedTileInGrid(sf::Vector2i position, std::ve
 		}
 	}
 }
-// Ludvig
-bool MapEditor::isSpriteClicked(sf::Sprite spr, sf::Vector2i *mousePos){
+
+bool MapEditor::isSpriteClicked(sf::Sprite& spr, sf::Vector2i *mousePos){
 	return mousePos->x > spr.getPosition().x
 		&& mousePos->x < spr.getPosition().x + spr.getLocalBounds().width
 		&& mousePos->y > spr.getPosition().y
 		&& mousePos->y < spr.getPosition().y + spr.getLocalBounds().height;
+}
+
+void MapEditor::updateInsertType(){
+	mInsertType = mMeny.getInsertType();
 }

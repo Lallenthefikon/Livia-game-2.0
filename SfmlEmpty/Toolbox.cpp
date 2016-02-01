@@ -6,6 +6,11 @@ static sf::Texture mBlock0texture;
 static sf::Texture mPlayertexture;
 static sf::Texture mTileTexture;
 
+// Camera edit
+static sf::Vector2f mWindowSize;
+static sf::Vector2f mResolution;
+static sf::Vector2f mWindowPos;
+
 Toolbox& Toolbox::getInstance(){
 	static Toolbox toolbox;
 	return toolbox;
@@ -41,3 +46,27 @@ sf::Texture& Toolbox::getTexture(TEXTUREKEY textureKey){
 		break;
 	}
 }
+
+// Camera Edit
+void Toolbox::copyScreenInfo(sf::RenderWindow &window, sf::VideoMode &videoMode){
+	mWindowSize = sf::Vector2f(window.getSize());
+	mResolution.x = videoMode.width;
+	mResolution.y = videoMode.height;
+	mWindowPos = sf::Vector2f(window.getPosition());
+}
+
+sf::Vector2f Toolbox::getWindowSize(){
+	return mWindowSize;
+}
+
+sf::Vector2f Toolbox::getResolution(){
+	return mResolution;
+}
+
+sf::Vector2f Toolbox::getWindowPos(){
+	return mWindowPos;
+}
+
+//void Toolbox::copyPlayerInfo(Player &player){
+//}
+//static Player& getPlayer();

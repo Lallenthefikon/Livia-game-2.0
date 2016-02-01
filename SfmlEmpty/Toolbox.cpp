@@ -21,7 +21,7 @@ Toolbox& Toolbox::getInstance(){
 void Toolbox::loadTextures(){
 	mWormtexture.loadFromFile("resources/images/Mask.png");
 	mBlock0texture.loadFromFile("resources/images/Block0.png");
-	mPlayertexture.loadFromFile("resources/images/Livia test run_00034.png");
+	mPlayertexture.loadFromFile("resources/images/Livia test run_00022.png");
 
 	mTileTexture.loadFromFile("resources/images/Tile.png");
 	mEditorMenyTexture.loadFromFile("resources/images/EditorMeny.png");

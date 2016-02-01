@@ -24,7 +24,7 @@ Entity* Player::createPlayer(sf::Vector2f pos){
 }
 
 void Player::render(sf::RenderWindow &window){
-	window.draw(mSpriteOutline);
+	//window.draw(mSpriteOutline);
 	window.draw(mSprite);
 }
 
@@ -39,17 +39,25 @@ void Player::move() {
 
 	accelerateUp();
 
-	// Jump
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) mVelocity.y = jumpVelocity;
+	jump();
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift)) {
+		mPlayerSpeed = 5;
+	}
+	else {
+		mPlayerSpeed = 30;
+	}
 
 	mVelocity.x = lerp(mVelocityGoal.x, mVelocity.x, timeElapsed * 100);
-	mVelocity.y = lerp(mVelocityGoal.y, mVelocity.y, timeElapsed * 100);
+	if (!mGrounded) {
+		mVelocity.y = lerp(mVelocityGoal.y, mVelocity.y, timeElapsed * 100);
+	}
 
 	// Updates the player's position
 	mSprite.move((mVelocity + mGravity) * timeElapsed);
 
 	// Keeps the player above the bottom, ####TEMPORARY####
-	if (mSprite.getPosition().y > 960) mSprite.setPosition(mSprite.getPosition().x, 960);
+	if (mSprite.getPosition().y > 660) mSprite.setPosition(mSprite.getPosition().x, 660);
 	mSpriteOutline.setPosition(mSprite.getPosition());
 
 	accelerateDown();
@@ -71,6 +79,14 @@ float Player::lerp(float goal, float current, float delta) {
 
 	// Max velocity
 	return goal;
+}
+
+void Player::jump() {
+	// Jump
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
+		mGrounded = false;
+		mVelocity.y = jumpVelocity;
+	}
 }
 
 void Player::accelerateUp(){
@@ -119,17 +135,24 @@ void Player::showCoords(){
 }
 
 void Player::move(sf::Vector2f &direction) {
-	if (direction.y < 0 || direction.y > 0) {
-		mSprite.move(direction * mGravity.y * timeElapsed);
-		mSpriteOutline.move(direction * mGravity.y * timeElapsed);
-	}
-	/*else if (direction.y > 0) {
-		mVelocity.y = mGravity.y;
-		mSprite.setPosition(mSprite.getPosition().x, mSprite.getPosition().y);
-	}*/
-	
-	if (direction.x < 0 || direction.x > 0) {
-		mSprite.move(direction * mPlayerSpeed * timeElapsed);
-		mSpriteOutline.move(direction * mPlayerSpeed * timeElapsed);
-	}
+
+	mSprite.move(direction);
+
+//	if (direction.y > 0) {
+//		mSprite.move(direction);
+//		/*mSprite.move(direction * mGravity.y * timeElapsed);
+//		mSpriteOutline.move(direction * mGravity.y * timeElapsed);*/
+//	}
+//	
+//	if (direction.y < 0) {
+//		mSprite.move(direction);
+//		/*mGrounded = true;
+//		mVelocity.y = -mGravity.y;*/
+//		//mSprite.setPosition(mSprite.getPosition().x, mSprite.getPosition().y);
+//}
+//	
+//	if (direction.x < 0 || direction.x > 0) {
+//		mSprite.move(direction * mPlayerSpeed * timeElapsed);
+//		mSpriteOutline.move(direction * mPlayerSpeed * timeElapsed);
+//	}
 }

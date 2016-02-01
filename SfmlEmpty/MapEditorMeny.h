@@ -15,8 +15,6 @@ public:
 		WORM
 	};
 
-
-
 	static MapEditorMeny& getInstance();
 
 	void render(sf::RenderWindow &window);

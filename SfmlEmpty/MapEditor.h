@@ -8,6 +8,7 @@
 #include "Toolbox.h"
 #include "MapEditMaploader.h"
 #include "MapEditorMeny.h"
+#include "Camera.h"
 
 class MapEditor : public GameState{
 public:
@@ -44,8 +45,9 @@ private:
 	std::string floatToString(float f);
 
 	void createGrid();
-	sf::Sprite determineSelectedTileInGrid(sf::Vector2i position, std::vector<sf::Sprite> *grid);
-	bool isSpriteClicked(sf::Sprite& spr, sf::Vector2i *mousePos);
+
+	sf::Sprite determineSelectedTileInGrid(sf::Vector2f position, std::vector<sf::Sprite> *grid);
+	bool isSpriteClicked(sf::Sprite& spr, sf::Vector2f *mousePos);
 
 	void updateInsertType();
 
@@ -64,5 +66,8 @@ private:
 	sf::Vector2f mMapDimensionsPixels;
 	sf::Vector2f mMapDimensionsTiles;
 	sf::Vector2f mTileDimensions;
+
+	// Camera Edit
+	Camera mCamera;
 };
 

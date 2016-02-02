@@ -13,6 +13,7 @@ mMeny(MapEditorMeny::getInstance()),
 mCamera(){
 
 	Toolbox::loadTextures();
+	mTileTexture.loadFromImage(Toolbox::getTexture(Toolbox::TILETEXTURE));
 	MapEditor::loadMap();
 	MapEditor::createGrid();
 }
@@ -136,7 +137,7 @@ void MapEditor::render(sf::RenderWindow &window){
 }
 
 void MapEditor::createBlock0(sf::Vector2f mousePos){
-	mTerrains.push_back(Factory::createBlock0(mousePos));
+	mTerrains.push_back(Factory::createBlock0(mousePos,'a'));
 }
 
 void MapEditor::createPlayer(sf::Vector2f mousePos){
@@ -247,6 +248,8 @@ void MapEditor::writeTerrainToFile(std::string filename){
 			case Terrain::BLOCK0:
 				output.push_back('B');
 				output.push_back('0');
+				// Push what type of block it is
+				output.push_back(blockType(mTerrains[i]));
 				break;
 
 			default:
@@ -329,6 +332,77 @@ void MapEditor::writeEntityToFile(std::string filename){
 	entityFile.close();
 }
 
+char MapEditor::blockType(Terrain* terrain){
+
+	bool leftOccupied(false);
+	bool rightOccupied(false);
+	bool topOccupied(false);
+	bool botOccupied(false);
+
+	sf::Vector2f thisPos(terrain->getPos());
+
+	Terrains relevantTerrains;
+	for (Terrains::size_type i = 0; i < mTerrains.size(); i++){
+		if (mTerrains[i]->getPos().x < thisPos.x + 200 && mTerrains[i]->getPos().x > thisPos.x - 200)
+			relevantTerrains.push_back(mTerrains[i]);
+	}
+
+	// Check left side
+	sf::Vector2f leftBorder(thisPos.x - 1, 
+		thisPos.y + (terrain->getHeight()/ 2));
+	sf::Vector2f rightBorder(thisPos.x + terrain->getWidth() + 1, 
+		thisPos.y + (terrain->getHeight() / 2));
+	sf::Vector2f topBorder(thisPos.x + (terrain->getWidth() / 2), 
+		thisPos.y - 1);
+	sf::Vector2f botBorder(thisPos.x + (terrain->getWidth() / 2), 
+		thisPos.y + (terrain->getHeight() + 1));
+
+	for (Terrains::size_type i = 0; i < relevantTerrains.size(); i++){
+		if (MapEditor::isSpriteClicked(relevantTerrains[i]->getSprite(), &leftBorder))
+			leftOccupied = true;
+		if (MapEditor::isSpriteClicked(relevantTerrains[i]->getSprite(), &rightBorder))
+			rightOccupied = true;
+		if (MapEditor::isSpriteClicked(relevantTerrains[i]->getSprite(), &topBorder))
+			topOccupied = true;
+		if (MapEditor::isSpriteClicked(relevantTerrains[i]->getSprite(), &botBorder))
+			botOccupied = true;
+	}
+
+	if (leftOccupied && rightOccupied && topOccupied && botOccupied)
+		return 'a';
+	if (leftOccupied && rightOccupied && topOccupied && !botOccupied)
+		return 'b';
+	if (leftOccupied && rightOccupied && !topOccupied && botOccupied)
+		return 'c';
+	if (leftOccupied && !rightOccupied && topOccupied && botOccupied)
+		return 'd';
+	if (!leftOccupied && rightOccupied && topOccupied && botOccupied)
+		return 'e';
+	if (leftOccupied && rightOccupied && !topOccupied && !botOccupied)
+		return 'f';
+	if (leftOccupied && !rightOccupied && topOccupied && !botOccupied)
+		return 'g';
+	if (!leftOccupied && rightOccupied && topOccupied && !botOccupied)
+		return 'h';
+	if (leftOccupied && !rightOccupied && !topOccupied && botOccupied)
+		return 'i';
+	if (!leftOccupied && rightOccupied && !topOccupied && botOccupied)
+		return 'j';
+	if (!leftOccupied && !rightOccupied && topOccupied && botOccupied)
+		return 'k';
+	if (leftOccupied && !rightOccupied && !topOccupied && !botOccupied)
+		return 'l';
+	if (!leftOccupied && rightOccupied && !topOccupied && !botOccupied)
+		return 'm';
+	if (!leftOccupied && !rightOccupied && topOccupied && !botOccupied)
+		return 'n';
+	if (!leftOccupied && !rightOccupied && !topOccupied && botOccupied)
+		return 'o';
+	if (!leftOccupied && !rightOccupied && !topOccupied && !botOccupied)
+		return 'p';
+	return '0';
+}
+	
 void MapEditor::internalClear(){
 	while (!mEntities.empty()){
 		delete mEntities.back();
@@ -358,7 +432,7 @@ void MapEditor::createGrid(){
 		tilePos.x += mTileDimensions.x;
 
 		sf::Sprite xTile;
-		xTile.setTexture(Toolbox::getTexture(Toolbox::TILETEXTURE));
+		xTile.setTexture(mTileTexture);
 		xTile.setPosition(tilePos);
 
 		mGrid.push_back(xTile);
@@ -368,7 +442,7 @@ void MapEditor::createGrid(){
 			tilePos.y += mTileDimensions.y;
 
 			sf::Sprite yTile;
-			yTile.setTexture(Toolbox::getTexture(Toolbox::TILETEXTURE));
+			yTile.setTexture(mTileTexture);
 			yTile.setPosition(tilePos);
 			mGrid.push_back(yTile);
 
@@ -388,6 +462,7 @@ sf::Sprite MapEditor::determineSelectedTileInGrid(sf::Vector2f position, std::ve
 			return grid->at(i);
 		}
 	}
+	return grid->at(0);
 }
 
 
@@ -401,3 +476,4 @@ bool MapEditor::isSpriteClicked(sf::Sprite& spr, sf::Vector2f *mousePos){
 void MapEditor::updateInsertType(){
 	mInsertType = mMeny.getInsertType();
 }
+

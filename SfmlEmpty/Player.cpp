@@ -7,7 +7,8 @@ static float jumpVelocity = -300;
 Player::Player(sf::Vector2f pos) :
 mPlayerSpeed(30),
 mSpriteOutline(){
-	mSprite.setTexture(Toolbox::getTexture(Toolbox::PLAYERTEXTURE));
+	mTexture.loadFromImage(Toolbox::getTexture(Toolbox::PLAYERTEXTURE), sf::IntRect(0,0,120,140));
+	mSprite.setTexture(mTexture);
 	mSpriteOffset = sf::Vector2f(mSprite.getGlobalBounds().width / 2, mSprite.getGlobalBounds().height / 2);
 	mSprite.setPosition(pos - mSpriteOffset);
 	mSpriteOutline.setSize(sf::Vector2f(mSprite.getLocalBounds().width, mSprite.getLocalBounds().height));

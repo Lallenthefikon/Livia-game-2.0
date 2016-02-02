@@ -7,6 +7,6 @@ class Terrain;
 
 struct Factory{
 	static Entity* createPlayer(sf::Vector2f pos);
-	static Terrain* createBlock0(sf::Vector2f pos);
+	static Terrain* createBlock0(sf::Vector2f pos, char type);
 	static Entity* createWorm(sf::Vector2f pos);
 };

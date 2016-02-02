@@ -32,7 +32,10 @@ private:
 		mVelocityGoal = sf::Vector2f(0, 0),
 		mPosition,
 		mSpriteOffset;
+
+	sf::Texture mTexture;
 	sf::Sprite mSprite;
+
 	float mPlayerSpeed;
 	bool mIsOnScreen = true;
 	bool mGrounded = false;

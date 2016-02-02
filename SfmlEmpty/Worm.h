@@ -20,9 +20,12 @@ public:
 	virtual void addVector(sf::Vector2f &vector);
 	virtual void move(sf::Vector2f &direction);
 private:
+	Worm(sf::Vector2f pos);
+
+	sf::Texture mTexture;
 	sf::Sprite mSprite;
 	sf::Vector2f mSpriteOffset;
-	Worm(sf::Vector2f pos);
+
 	bool mIsOnScreen = true;
 	sf::RectangleShape mSpriteOutline;
 };

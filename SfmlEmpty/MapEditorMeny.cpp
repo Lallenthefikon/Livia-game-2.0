@@ -3,14 +3,14 @@
 
 MapEditorMeny::MapEditorMeny():
 mInsertType(BLOCK0){
-	mMenySprite.setTexture(Toolbox::getTexture(Toolbox::EDITORMENY));
+	mMenyTexture.loadFromImage(Toolbox::getTexture(Toolbox::EDITORMENY));
+	mMenySprite.setTexture(mMenyTexture);
 	mMenySprite.setPosition(0,0);
 	MapEditorMeny::insertObjects();
 }
 
 
-MapEditorMeny::~MapEditorMeny()
-{
+MapEditorMeny::~MapEditorMeny(){
 }
 
 MapEditorMeny& MapEditorMeny::getInstance(){
@@ -37,7 +37,7 @@ void MapEditorMeny::insertObjects(){
 
 	mEntities.push_back(Factory::createPlayer(sf::Vector2f(widthBetween, 100)));
 	mEntities.push_back(Factory::createWorm(sf::Vector2f(widthBetween * 2, 100)));
-	mTerrains.push_back(Factory::createBlock0(sf::Vector2f(widthBetween * 3, 100)));
+	mTerrains.push_back(Factory::createBlock0(sf::Vector2f(widthBetween * 3, 100), 'a'));
 }
 
 bool MapEditorMeny::menyClicked(sf::Vector2i mousepos){

@@ -40,6 +40,7 @@ private:
 	void saveMap();
 	void writeTerrainToFile(std::string filename);
 	void writeEntityToFile(std::string filename);
+	char blockType(Terrain* terrain);
 	void internalClear();
 
 	std::string floatToString(float f);
@@ -62,6 +63,8 @@ private:
 	Entities mEntities;
 	Terrains mTerrains;
 	MapEditorMeny& mMeny;
+
+	sf::Texture mTileTexture;
 
 	sf::Vector2f mMapDimensionsPixels;
 	sf::Vector2f mMapDimensionsTiles;

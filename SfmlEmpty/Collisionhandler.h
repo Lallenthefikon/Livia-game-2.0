@@ -19,9 +19,10 @@ private:
 	bool hasCollided(Entity *e0, Terrain *e1);
 	void checkCollisionDirection(Entity *e0, Entity *e1);
 	void checkCollisionDirection(Entity *e0, Terrain *e1);
+	sf::Vector2f mOneDirection;
 	sf::RectangleShape terrainOutline;
 	sf::RectangleShape terrainOutline1;
 	sf::RectangleShape playerOutline;
-	sf::RectangleShape line1, line2;
+	sf::RectangleShape line1, line2, line3;
 };
 

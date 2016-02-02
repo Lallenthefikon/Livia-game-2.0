@@ -49,9 +49,8 @@ void Player::move() {
 	}
 
 	mVelocity.x = lerp(mVelocityGoal.x, mVelocity.x, timeElapsed * 100);
-	if (!mGrounded) {
-		mVelocity.y = lerp(mVelocityGoal.y, mVelocity.y, timeElapsed * 100);
-	}
+	mVelocity.y = lerp(mVelocityGoal.y, mVelocity.y, timeElapsed * 100);
+
 
 	// Updates the player's position
 	mSprite.move((mVelocity + mGravity) * timeElapsed);
@@ -135,24 +134,26 @@ void Player::showCoords(){
 }
 
 void Player::move(sf::Vector2f &direction) {
-
+	// Moves the sprite away from collided thing
 	mSprite.move(direction);
 
-//	if (direction.y > 0) {
-//		mSprite.move(direction);
-//		/*mSprite.move(direction * mGravity.y * timeElapsed);
-//		mSpriteOutline.move(direction * mGravity.y * timeElapsed);*/
-//	}
-//	
-//	if (direction.y < 0) {
-//		mSprite.move(direction);
-//		/*mGrounded = true;
-//		mVelocity.y = -mGravity.y;*/
-//		//mSprite.setPosition(mSprite.getPosition().x, mSprite.getPosition().y);
-//}
-//	
-//	if (direction.x < 0 || direction.x > 0) {
-//		mSprite.move(direction * mPlayerSpeed * timeElapsed);
-//		mSpriteOutline.move(direction * mPlayerSpeed * timeElapsed);
-//	}
+	if (direction.y > 0) {
+		mVelocity.y = 0;
+		//mVelocity.y = -jumpVelocity;
+		//mSprite.move(direction);
+		//mSprite.move(direction * mGravity.y * timeElapsed);
+		//mSpriteOutline.move(direction * mGravity.y * timeElapsed);
+	}
+
+	if (direction.y < 0) {
+		//mSprite.move(direction);
+	
+		mVelocity.y = -mGravity.y;
+		//mSprite.setPosition(mSprite.getPosition().x, mSprite.getPosition().y);
+	}
+
+	/*if (direction.x < 0 || direction.x > 0) {
+		mSprite.move(direction * mPlayerSpeed * timeElapsed);
+		mSpriteOutline.move(direction * mPlayerSpeed * timeElapsed);
+	}*/
 }

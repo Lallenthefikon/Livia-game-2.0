@@ -6,7 +6,9 @@ playerOutline(),
 terrainOutline(),
 terrainOutline1(),
 line1(),
-line2(){
+line2(),
+line3(),
+mOneDirection(){
 }
 
 Collisionhandler::~Collisionhandler(){
@@ -143,9 +145,6 @@ void Collisionhandler::checkCollisionDirection(Entity *e0, Entity *e1) {
 
 // Collision between an entity and a terrain
 void Collisionhandler::checkCollisionDirection(Entity *e0, Terrain *e1) {
-	terrainOutline.setSize(sf::Vector2f(e1->getWidth(), e1->getHeight()));
-	terrainOutline.setPosition(e1->getPos());
-	terrainOutline.setFillColor(sf::Color::Yellow);
 
 	float e0Left = e0->getPos().x;
 	float e0Right = e0->getPos().x + e0->getWidth();
@@ -157,42 +156,57 @@ void Collisionhandler::checkCollisionDirection(Entity *e0, Terrain *e1) {
 	float e1Top = e1->getPos().y;
 	float e1Bottom = e1->getPos().y + e1->getHeight();
 
-	line1.setSize(sf::Vector2f(e0->getWidth(), 1));
-	line1.setFillColor(sf::Color::Blue);
-	line1.setPosition(e0Left, e0Bottom);
+	line3.setSize(sf::Vector2f(e0->getWidth(), 1));
+	line3.setFillColor(sf::Color::White);
+	line3.setPosition(e0->getPos().x, e0->getPos().y + e0->getHeight());
 
-	line2.setSize(sf::Vector2f(e1->getWidth(), 1));
-	line2.setFillColor(sf::Color::Magenta);
-	line2.setPosition(e1Left, e1Top);
-
-	float deltaBottomCollision = e1Bottom - e0Top; // Distance between the enemy's bottom edge and the player's top edge
-	float deltaTopCollision = e0Bottom - e1Top; // Distance between the player's bottom edge and the enemy's top edge
-	float deltaLeftCollision = e0Right - e1Left;
-	float deltaRightCollision = e1Right - e0Left;
+	float deltaBottomCollision = abs(e1Bottom - e0Top); // Distance between the enemy's bottom edge and the player's top edge
+	float deltaTopCollision = abs(e0Bottom - e1Top); // Distance between the player's bottom edge and the enemy's top edge
+	float deltaLeftCollision = abs(e0Right - e1Left);
+	float deltaRightCollision = abs(e1Right - e0Left);
 
 	std::cout << "deltaTop: " << deltaTopCollision << " deltaBottom: " << deltaBottomCollision << " deltaLeft: " << deltaLeftCollision << " deltaRight: " << deltaRightCollision << std::endl;
-
+	//std::cout << "Player Y: " << e0Top << std::endl;
 
 	// Checks if deltaTopCollision is the smallest value
 	if (deltaTopCollision < deltaBottomCollision && deltaTopCollision < deltaLeftCollision && deltaTopCollision < deltaRightCollision) {
 		// Top collision, e0 collided with e1's top edge
-		e0->move(sf::Vector2f(0, -1 * deltaTopCollision));
+		mOneDirection += sf::Vector2f(0, -1 * deltaTopCollision);
 	}
 	// Checks if deltaBottomCollision is the smallest value
-	if (deltaBottomCollision < deltaTopCollision && deltaBottomCollision < deltaLeftCollision && deltaBottomCollision < deltaRightCollision) {
+	else if (deltaBottomCollision < deltaTopCollision && deltaBottomCollision < deltaLeftCollision && deltaBottomCollision < deltaRightCollision) {
 		// Bottom collision
-		e0->move(sf::Vector2f(0, 1 * deltaBottomCollision));
+		mOneDirection += sf::Vector2f(0, 1 * deltaBottomCollision);
 	}
 	// Checks if deltaLeftCollision is the smallest value
 	if (deltaLeftCollision < deltaRightCollision && deltaLeftCollision < deltaTopCollision && deltaLeftCollision < deltaBottomCollision) {
 		// Left collision
-		e0->move(sf::Vector2f(-1 * deltaLeftCollision, 0));
+		mOneDirection += sf::Vector2f(-1 * deltaLeftCollision, 0);
 	}
 	// Checks if deltaRightCollision is the smallest value	
-	if (deltaRightCollision < deltaLeftCollision && deltaRightCollision < deltaTopCollision && deltaRightCollision < deltaBottomCollision) {
+	else if (deltaRightCollision < deltaLeftCollision && deltaRightCollision < deltaTopCollision && deltaRightCollision < deltaBottomCollision) {
 		// Right collision
-		e0->move(sf::Vector2f(1 * deltaRightCollision, 0));
+		mOneDirection += sf::Vector2f(1 * deltaRightCollision, 0);
 	}
+
+	// Moves the player away from the block
+	e0->move(mOneDirection);
+
+	// Resets the direction
+	mOneDirection = sf::Vector2f(0, 0);
+
+	line1.setSize(sf::Vector2f(e0->getWidth(), 1));
+	line1.setFillColor(sf::Color::Blue);
+	line1.setPosition(e0->getPos().x, e0->getPos().y + e0->getHeight());
+
+	line2.setSize(sf::Vector2f(e1->getWidth(), 1));
+	line2.setFillColor(sf::Color::Magenta);
+	line2.setPosition(e1->getPos().x, e1->getPos().y);
+
+	terrainOutline.setSize(sf::Vector2f(e1->getWidth(), e1->getHeight()));
+	terrainOutline.setPosition(e1->getPos());
+	terrainOutline.setFillColor(sf::Color::Yellow);
+
 	playerOutline.setSize(sf::Vector2f(e0->getWidth(), e0->getHeight()));
 	playerOutline.setPosition(e0->getPos());
 	playerOutline.setFillColor(sf::Color::Red);
@@ -204,4 +218,5 @@ void Collisionhandler::renderCollision(sf::RenderWindow &window) {
 	window.draw(terrainOutline1);
 	window.draw(line1);
 	window.draw(line2);
+	window.draw(line3);
 }

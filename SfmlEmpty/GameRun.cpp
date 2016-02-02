@@ -29,9 +29,9 @@ void GameRun::update(sf::RenderWindow &window){
 			window.close();
 
 	}
+	mCollisionHandler.checkCollision(mEntityHandler.getEntities(), mTerrainHandler.getTerrains());
 	mEntityHandler.updateEntities();
 	mTerrainHandler.updateTerrains();
-	mCollisionHandler.checkCollision(mEntityHandler.getEntities(), mTerrainHandler.getTerrains());
 }
 
 void GameRun::render(sf::RenderWindow &window){

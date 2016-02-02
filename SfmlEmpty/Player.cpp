@@ -13,6 +13,7 @@ mSpriteOutline(){
 	mSpriteOutline.setSize(sf::Vector2f(mSprite.getLocalBounds().width, mSprite.getLocalBounds().height));
 	mSpriteOutline.setPosition(mSprite.getPosition());
 	mSpriteOutline.setFillColor(sf::Color::Red);
+	Toolbox::copyPlayerInfo(mSprite);
 }
 
 
@@ -30,6 +31,7 @@ void Player::render(sf::RenderWindow &window){
 
 void Player::update(){
 	move();
+	Toolbox::copyPlayerInfo(mSprite);
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::M)){
 		showCoords();
 	}
@@ -131,7 +133,7 @@ void Player::addVector(sf::Vector2f &vector){
 }
 
 void Player::showCoords(){
-	std::cout << "X: " << mSprite.getPosition().x << " Y: " << mSprite.getPosition().y << std::endl;
+	//std::cout << "X: " << mSprite.getPosition().x << " Y: " << mSprite.getPosition().y << std::endl;
 }
 
 void Player::move(sf::Vector2f &direction) {

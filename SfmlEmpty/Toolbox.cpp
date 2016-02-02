@@ -13,6 +13,8 @@ static sf::Vector2f mWindowSize;
 static sf::Vector2f mResolution;
 static sf::Vector2f mWindowPos;
 
+static sf::Sprite mPlayerSprite;
+
 Toolbox& Toolbox::getInstance(){
 	static Toolbox toolbox;
 	return toolbox;
@@ -75,6 +77,10 @@ sf::Vector2f Toolbox::getWindowPos(){
 	return mWindowPos;
 }
 
-//void Toolbox::copyPlayerInfo(Player &player){
-//}
-//static Player& getPlayer();
+void Toolbox::copyPlayerInfo(sf::Sprite &playerSprite){
+	mPlayerSprite = playerSprite;
+}
+
+sf::Sprite Toolbox::getPlayerSprite(){
+	return mPlayerSprite;
+}

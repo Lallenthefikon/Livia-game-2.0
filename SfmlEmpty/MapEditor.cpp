@@ -82,13 +82,15 @@ void MapEditor::update(sf::RenderWindow &window){
 				case sf::Mouse::Middle:
 					MapEditor::changeInsertType();
 					break;
-
 				default:
 					break;
 					}
 				}
 			}
+		if (gEvent.type == sf::Event::MouseWheelMoved){
+			mCamera.zoomCameraEDITOR(gEvent);
 		}
+
 		if (gEvent.type == sf::Event::KeyPressed){
 			switch (gEvent.key.code){
 			case sf::Keyboard::S:
@@ -101,7 +103,9 @@ void MapEditor::update(sf::RenderWindow &window){
 				break;
 			}
 		}
+		}
 
+		
 
 	if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 		mCamera.updateCamEDITOR(window, "Up");

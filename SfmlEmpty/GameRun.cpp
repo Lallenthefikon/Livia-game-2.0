@@ -7,7 +7,8 @@ mTerrainHandler(Terrainhandler::getInstance()),
 mEntityHandler(Entityhandler::getInstance()),
 mMapGenerator(MapGenerator::getInstance()),
 mCollisionHandler(Collisionhandler::getInstance()),
-mCurrentMap(mapname){
+mCurrentMap(mapname),
+mCamera(){
 	Toolbox::loadTextures();
 	mMapGenerator.loadMap(mapname);
 }
@@ -32,6 +33,8 @@ void GameRun::update(sf::RenderWindow &window){
 	mEntityHandler.updateEntities();
 	mTerrainHandler.updateTerrains();
 	mCollisionHandler.checkCollision(mEntityHandler.getEntities(), mTerrainHandler.getTerrains());
+	mCamera.updateCamGAME(window);
+	window.setView(mCamera.getView());
 }
 
 void GameRun::render(sf::RenderWindow &window){

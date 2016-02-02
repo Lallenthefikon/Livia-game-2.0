@@ -6,6 +6,7 @@
 #include "Collisionhandler.h"
 #include "MapGenerator.h"
 #include "Toolbox.h"
+#include "Camera.h"
 
 class GameRun : public GameState{
 public:
@@ -24,5 +25,7 @@ private:
 	Collisionhandler& mCollisionHandler;
 
 	std::string mCurrentMap;
+
+	Camera mCamera;
 };
 

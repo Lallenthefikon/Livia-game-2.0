@@ -77,16 +77,17 @@ void MapEditor::update(sf::RenderWindow &window){
 							break;
 						}
 					}
-						break;
+					break;
 
 				case sf::Mouse::Middle:
 					MapEditor::changeInsertType();
 					break;
 				default:
 					break;
-					}
 				}
 			}
+
+		}
 		if (gEvent.type == sf::Event::MouseWheelMoved){
 			mCamera.zoomCameraEDITOR(gEvent);
 		}
@@ -103,10 +104,9 @@ void MapEditor::update(sf::RenderWindow &window){
 				break;
 			}
 		}
-		}
+	}
 
-		
-
+	// Camera movement
 	if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 		mCamera.updateCamEDITOR(window, "Up");
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
@@ -316,7 +316,7 @@ void MapEditor::writeEntityToFile(std::string filename){
 			output.push_back(',');
 
 			// Inserts ypos into output
-			posString = MapEditor::floatToString(mEntities[i]->getPos().y + mEntities[i]->getOffset().x);
+			posString = MapEditor::floatToString(mEntities[i]->getPos().y + mEntities[i]->getOffset().y);
 			for (std::string::size_type iS = 0; iS < posString.size(); iS++){
 				output.push_back(posString[iS]);
 			}

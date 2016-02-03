@@ -26,7 +26,7 @@ private:
 	void readTerrainfile(std::string &mapname);
 	void readEntityfile(std::string &mapname);
 
-	void createBlock0(sf::Vector2f &pos);
+	void createBlock0(sf::Vector2f &pos, char type);
 	void createPlayer(sf::Vector2f &pos);
 	void createWorm(sf::Vector2f &pos);
 

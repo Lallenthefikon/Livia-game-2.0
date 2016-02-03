@@ -41,9 +41,9 @@ void MapEditMaploader::clear(){
 			 case 'B':
 				 switch (line[1]){
 				 case '0':
-					 MapEditMaploader::createBlock0(MapEditMaploader::readPosition(line));
+					 MapEditMaploader::createBlock0(MapEditMaploader::readPosition(line), line[2]);
 					 break;
-				 default:
+				 default: 
 					 break;
 				 }
 				 break;
@@ -94,8 +94,8 @@ void MapEditMaploader::clear(){
 	 entityfile.close();
  }
 
- void MapEditMaploader::createBlock0(sf::Vector2f &pos){
-	 mTerrains.push_back(Factory::createBlock0(pos));
+ void MapEditMaploader::createBlock0(sf::Vector2f &pos, char type){
+	 mTerrains.push_back(Factory::createBlock0(pos, type));
  }
 
  void MapEditMaploader::createPlayer(sf::Vector2f &pos){

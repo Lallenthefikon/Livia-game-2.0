@@ -46,7 +46,7 @@ void MapGenerator::readTerrainfile(std::string &filename){
 			case 'B':
 				switch (line[1]){
 				case '0':
-					MapGenerator::createBlock0(MapGenerator::readPosition(line));
+					MapGenerator::createBlock0(MapGenerator::readPosition(line),line[2]);
 					break;
 				default:
 					break;
@@ -113,8 +113,8 @@ void MapGenerator::createPlayer(sf::Vector2f pos){
 
 // Create terrains
 
-void MapGenerator::createBlock0(sf::Vector2f pos){
-	mTerrainhandler->addTerrain(Factory::createBlock0(pos));
+void MapGenerator::createBlock0(sf::Vector2f pos, char type){
+	mTerrainhandler->addTerrain(Factory::createBlock0(pos, type));
 }
 
 sf::Vector2f MapGenerator::readPosition(std::string line){

@@ -1,7 +1,8 @@
 #include "Worm.h"
 
 Worm::Worm(sf::Vector2f pos){
-	mSprite.setTexture(Toolbox::getTexture(Toolbox::WORMTEXTURE));
+	mTexture.loadFromImage(Toolbox::getTexture(Toolbox::WORMTEXTURE));
+	mSprite.setTexture(mTexture);
 	mSpriteOffset = sf::Vector2f(mSprite.getLocalBounds().width / 2, mSprite.getLocalBounds().height / 2);
 	mSprite.setPosition(pos - mSpriteOffset);
 	mSpriteOutline.setSize(sf::Vector2f(mSprite.getLocalBounds().width, mSprite.getLocalBounds().height));

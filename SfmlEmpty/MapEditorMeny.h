@@ -41,6 +41,8 @@ private:
 	
 	INSERTTYPE mInsertType;
 
+	sf::Texture mMenyTexture;
+
 	sf::Sprite mMenySprite;
 };
 

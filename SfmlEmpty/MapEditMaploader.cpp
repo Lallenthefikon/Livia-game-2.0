@@ -269,11 +269,18 @@ void MapEditMaploader::clear(){
 			 deciDivider = 1;
 			 break;
 
-		 case '-':
+		 case '|':
 			 if (deciDone)
 				 xSum /= deciDivider;
 
 			 return sf::Vector2f(xSum, ySum);
+			 break;
+
+		 case '-':
+			 if (yDone)
+				 xSum *= -1;
+			 else
+				 ySum *= -1;
 			 break;
 
 		 default:

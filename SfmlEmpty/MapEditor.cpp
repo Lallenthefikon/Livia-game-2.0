@@ -256,7 +256,7 @@ void MapEditor::writeTerrainToFile(std::string filename){
 				break;
 
 			}
-			output.push_back('-');
+			output.push_back('|');
 
 			// Inserts xpos into output followed by a ','
 			posString = MapEditor::floatToString(mTerrains[i]->getPos().x + mTerrains[i]->getOffset().x);
@@ -306,7 +306,7 @@ void MapEditor::writeEntityToFile(std::string filename){
 			default:
 				break;
 			}
-			output.push_back('-');
+			output.push_back('|');
 
 			// Inserts xpos into output followed by a ','
 			posString = MapEditor::floatToString(mEntities[i]->getPos().x + mEntities[i]->getOffset().x);

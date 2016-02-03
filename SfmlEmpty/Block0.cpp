@@ -23,72 +23,88 @@ void Block0::update(){
 }
 
 void Block0::setTexture(char type){
+	float tileWidth(70);
+	float tileHeight(70);
+	int xIndex(0);
+	int yIndex(0);
+
 	switch (type){
+
 	case 'a':
-		mTexture.loadFromImage(Toolbox::getTexture(Toolbox::BLOCK0TEXTURE));
 		break;
 
 	case 'b':
-		mTexture.loadFromImage(Toolbox::getTexture(Toolbox::BLOCK0TEXTURE));
+		xIndex = 1;
 		break;
 
 	case 'c':
-		mTexture.loadFromImage(Toolbox::getTexture(Toolbox::BLOCK0TEXTURE));
+		xIndex = 2;
 		break;
 
 	case 'd':
-		mTexture.loadFromImage(Toolbox::getTexture(Toolbox::BLOCK0TEXTURE));
+		xIndex = 3;
 		break;
 
 	case 'e':
-		mTexture.loadFromImage(Toolbox::getTexture(Toolbox::BLOCK0TEXTURE));	
+		yIndex = 1;
 		break;
 
 	case 'f':
-		mTexture.loadFromImage(Toolbox::getTexture(Toolbox::BLOCK0TEXTURE));
+		yIndex = 1;
+		xIndex = 1;
 		break;
 
 	case 'g':
-		mTexture.loadFromImage(Toolbox::getTexture(Toolbox::BLOCK0TEXTURE));
+		yIndex = 1;
+		xIndex = 2;
 		break;
 
 	case 'h':
-		mTexture.loadFromImage(Toolbox::getTexture(Toolbox::BLOCK0TEXTURE));
+		yIndex = 1;
+		xIndex = 3;
 		break;
 
 	case 'i':
-		mTexture.loadFromImage(Toolbox::getTexture(Toolbox::BLOCK0TEXTURE));
+		yIndex = 2;
 		break;
 
 	case 'j':
-		mTexture.loadFromImage(Toolbox::getTexture(Toolbox::BLOCK0TEXTURE));
+		yIndex = 2;
+		xIndex = 1;
 		break;
 
 	case 'k':
-		mTexture.loadFromImage(Toolbox::getTexture(Toolbox::BLOCK0TEXTURE));
+		yIndex = 2;
+		xIndex = 2;
 		break;
 
 	case 'l':
-		mTexture.loadFromImage(Toolbox::getTexture(Toolbox::BLOCK0TEXTURE));
+		yIndex = 2;
+		xIndex = 3;
 		break;
 
 	case 'm':
-		mTexture.loadFromImage(Toolbox::getTexture(Toolbox::BLOCK0TEXTURE));
+		yIndex = 3;
 		break;
 
 	case 'n':
-		mTexture.loadFromImage(Toolbox::getTexture(Toolbox::BLOCK0TEXTURE));
+		yIndex = 3;
+		xIndex = 1;
 		break;
 
 	case 'o':
-		mTexture.loadFromImage(Toolbox::getTexture(Toolbox::BLOCK0TEXTURE));
+		yIndex = 3;
+		xIndex = 2;
 		break;
 
 	case 'p':
-		mTexture.loadFromImage(Toolbox::getTexture(Toolbox::BLOCK0TEXTURE));
+		yIndex = 3;
+		xIndex = 3;
 		break;
 
 	default:
 		break;
 	}
+	mTexture.loadFromImage(Toolbox::getTexture(Toolbox::BLOCK0TEXTURE),
+		sf::IntRect(tileWidth * xIndex, tileHeight * yIndex, tileWidth, tileHeight));
 }

@@ -26,6 +26,7 @@ private:
 	void accelerateUp();
 	void accelerateDown();
 	void jump();
+	void speedModifier();
 	void showCoords();
 	sf::Vector2f mGravity, 
 		mVelocity = sf::Vector2f(0, 0), 
@@ -38,7 +39,8 @@ private:
 
 	float mPlayerSpeed;
 	bool mIsOnScreen = true;
-	bool mGrounded = false;
+	bool mGrounded = true;
+	int mClickOnce = 0, mNrofJumpsLeft;
 	sf::RectangleShape mSpriteOutline;
 };
 

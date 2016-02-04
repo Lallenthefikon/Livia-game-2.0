@@ -2,18 +2,15 @@
 #include <iostream>
 
 static float timeElapsed = 0.1666666666666667;
-static float jumpVelocity = -300;
+static float jumpVelocity = -375;
 
 Player::Player(sf::Vector2f pos) :
 mPlayerSpeed(30),
-mSpriteOutline(){
+mNrofJumpsLeft(3){
 	mTexture.loadFromImage(Toolbox::getTexture(Toolbox::PLAYERTEXTURE), sf::IntRect(0,0,120,140));
 	mSprite.setTexture(mTexture);
 	mSpriteOffset = sf::Vector2f(mSprite.getGlobalBounds().width / 2, mSprite.getGlobalBounds().height / 2);
-	mSprite.setPosition(pos - mSpriteOffset);
-	mSpriteOutline.setSize(sf::Vector2f(mSprite.getLocalBounds().width, mSprite.getLocalBounds().height));
-	mSpriteOutline.setPosition(mSprite.getPosition());
-	mSpriteOutline.setFillColor(sf::Color::Red);
+
 	Toolbox::copyPlayerInfo(mSprite);
 }
 
@@ -26,7 +23,6 @@ Entity* Player::createPlayer(sf::Vector2f pos){
 }
 
 void Player::render(sf::RenderWindow &window){
-	//window.draw(mSpriteOutline);
 	window.draw(mSprite);
 }
 
@@ -40,32 +36,23 @@ void Player::update(){
 
 void Player::move() {
 
-	accelerateUp();
-
+	speedModifier();
 	jump();
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift)) {
-		mPlayerSpeed = 5;
-	}
-	else {
-		mPlayerSpeed = 30;
-	}
+	accelerateUp();
 
 	mVelocity.x = lerp(mVelocityGoal.x, mVelocity.x, timeElapsed * 100);
-	if (!mGrounded) {
-		mVelocity.y = lerp(mVelocityGoal.y, mVelocity.y, timeElapsed * 100);
-	}
+	mVelocity.y = lerp(mVelocityGoal.y, mVelocity.y, timeElapsed * 100);
 
 	// Updates the player's position
 	mSprite.move((mVelocity + mGravity) * timeElapsed);
+
 
 	// Keeps the player above the bottom, ####TEMPORARY####
 	/*if (mSprite.getPosition().y > 660) mSprite.setPosition(mSprite.getPosition().x, 660);
 	mSpriteOutline.setPosition(mSprite.getPosition());*/
 
 	accelerateDown();
-
-	
 }
 
 float Player::lerp(float goal, float current, float delta) {
@@ -87,6 +74,14 @@ float Player::lerp(float goal, float current, float delta) {
 void Player::jump() {
 	// Jump
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
+		mClickOnce++;
+	}
+	else {
+		mClickOnce = 0;
+	}
+
+	if (mClickOnce == 1 && mNrofJumpsLeft > 0) {
+		mNrofJumpsLeft--;
 		mGrounded = false;
 		mVelocity.y = jumpVelocity;
 	}
@@ -99,7 +94,7 @@ void Player::accelerateUp(){
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
 		mVelocityGoal.y = mPlayerSpeed * 1;
-	}	*/
+	}*/	
 
 	// Left and right
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
@@ -141,21 +136,21 @@ void Player::move(sf::Vector2f &direction) {
 
 	mSprite.move(direction);
 
-//	if (direction.y > 0) {
-//		mSprite.move(direction);
-//		/*mSprite.move(direction * mGravity.y * timeElapsed);
-//		mSpriteOutline.move(direction * mGravity.y * timeElapsed);*/
-//	}
-//	
-//	if (direction.y < 0) {
-//		mSprite.move(direction);
-//		/*mGrounded = true;
-//		mVelocity.y = -mGravity.y;*/
-//		//mSprite.setPosition(mSprite.getPosition().x, mSprite.getPosition().y);
-//}
-//	
-//	if (direction.x < 0 || direction.x > 0) {
-//		mSprite.move(direction * mPlayerSpeed * timeElapsed);
-//		mSpriteOutline.move(direction * mPlayerSpeed * timeElapsed);
-//	}
+	if (direction.y < 0) {
+		mVelocity.y = -mGravity.y;
+		mGrounded = true;
+		mNrofJumpsLeft = 3;
+	}
+}
+
+void Player::speedModifier() {
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::LControl)) {
+		mPlayerSpeed = 5;
+	}
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift)) {
+		mPlayerSpeed = 50;
+	}
+	else {
+		mPlayerSpeed = 30;
+	}
 }

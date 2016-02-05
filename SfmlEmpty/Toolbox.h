@@ -3,7 +3,9 @@
 #include <SFML\Graphics.hpp>
 
 struct Toolbox{
+	
 	enum TEXTUREKEY { WORMTEXTURE, BLOCK0TEXTURE, PLAYERTEXTURE, TILETEXTURE, EDITORMENY };
+	
 	static Toolbox& getInstance();
 	static void loadTextures();
 	static sf::Image& getTexture(TEXTUREKEY textureKey);

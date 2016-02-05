@@ -3,9 +3,11 @@
 #include "Entity.h"
 #include <SFML\System.hpp>
 #include "Toolbox.h"
+#include "Animations.h"
 
 class Worm : public Entity{
 public:
+	enum WORMSTATE{CRAWLINGLEFT, CRAWLINGRIGHT};
 	virtual ~Worm();
 	virtual ENTITYTYPE getType(){ return WORM; }
 	static Entity* createWorm(sf::Vector2f pos);
@@ -18,15 +20,46 @@ public:
 	virtual sf::Sprite getSprite(){ return mSprite; }
 	virtual bool isOnScreen(){ return mIsOnScreen; }
 	virtual void addVector(sf::Vector2f &vector);
-	virtual void move(sf::Vector2f &direction);
+	virtual void entityCollision(Entity* entity, char direction);
+	virtual void terrainCollision(Terrain* terrain, char direction);
 private:
 	Worm(sf::Vector2f pos);
 
-	sf::Texture mTexture;
-	sf::Sprite mSprite;
-	sf::Vector2f mSpriteOffset;
+	void addSpeed();
 
-	bool mIsOnScreen = true;
-	sf::RectangleShape mSpriteOutline;
+	void updateState();
+	void updateANI();
+	void updateCollision();
+	void animate();
+
+	bool currentCollisionT();
+	bool currentCollisionB();
+	bool currentCollisionL();
+	bool currentCollisionR();
+
+	sf::Sprite mSprite;
+
+	// Animimations stuff
+	Animations::Textures* mCurrentAnimation;
+	int mAnimationIndex;
+	float mTimer;
+
+	float mSpeed;
+	float mMaxSpeed;
+
+	sf::Vector2f mSpriteOffset,
+		mVelocity;
+
+	WORMSTATE mState;
+	bool mIsOnScreen;
+
+	char mCollisionT;
+	char mCollisionB;
+	char mCollisionL;
+	char mCollisionR;
+	Terrain* mCurrentCollisionB;
+	Terrain* mCurrentCollisionT;
+	Terrain* mCurrentCollisionL;
+	Terrain* mCurrentCollisionR;
 };
 

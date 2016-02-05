@@ -1,7 +1,7 @@
 #include "Entityhandler.h"
 
 Entityhandler::Entityhandler():
-mGravity(sf::Vector2f(0, 150)){
+mGravity(sf::Vector2f(0, 2)){
 }
 
 Entityhandler::~Entityhandler(){

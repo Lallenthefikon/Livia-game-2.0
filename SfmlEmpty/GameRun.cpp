@@ -9,6 +9,7 @@ mMapGenerator(MapGenerator::getInstance()),
 mCollisionHandler(Collisionhandler::getInstance()),
 mCurrentMap(mapname){
 	Toolbox::loadTextures();
+	Animations::loadTextures();
 	mMapGenerator.loadMap(mapname);
 }
 
@@ -27,7 +28,6 @@ void GameRun::update(sf::RenderWindow &window){
 
 		if (gEvent.type == sf::Event::Closed)
 			window.close();
-
 	}
 	mEntityHandler.updateEntities();
 	mTerrainHandler.updateTerrains();
@@ -37,7 +37,7 @@ void GameRun::update(sf::RenderWindow &window){
 void GameRun::render(sf::RenderWindow &window){
 	window.clear();
 	mTerrainHandler.renderTerrains(window);
-	mCollisionHandler.renderCollision(window);
+	//mCollisionHandler.renderCollision(window);
 	mEntityHandler.renderEntities(window);
 	window.display();
 }

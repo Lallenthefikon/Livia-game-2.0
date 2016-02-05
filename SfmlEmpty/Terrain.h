@@ -1,10 +1,11 @@
 #pragma once
 
 #include <SFML\Graphics.hpp>
+#include "Toolbox.h"
 
 class Terrain{
 public:
-	enum TERRAINTYPE {BLOCK0};
+	enum TERRAINTYPE { BLOCK0 };
 	Terrain();
 	virtual ~Terrain();
 	virtual TERRAINTYPE getType() = 0;

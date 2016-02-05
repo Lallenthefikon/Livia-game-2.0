@@ -21,7 +21,7 @@ Toolbox& Toolbox::getInstance(){
 void Toolbox::loadTextures(){
 	mEnemy0sheet.loadFromFile("resources/images/Mask.png");
 	mBlock0sheet.loadFromFile("resources/images/Block0 spritesheet placeholder.png");
-	mPlayersheet.loadFromFile("resources/images/Livia placeholder spritesheet.png");
+	mPlayersheet.loadFromFile("resources/images/Livia_spritesheet_placeholder1.2(100,140).png");
 
 	mTileTexture.loadFromFile("resources/images/Tile.png");
 	mEditorMenyTexture.loadFromFile("resources/images/EditorMeny.png");

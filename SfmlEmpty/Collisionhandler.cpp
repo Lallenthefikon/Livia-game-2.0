@@ -91,10 +91,10 @@ bool Collisionhandler::hasCollided(Entity *e0, Terrain *e1) {
 
 
 	// Has collided if all conditions are met
-	if (e0Left < e1Right &&
-		e0Right > e1Left &&
-		e0Top < e1Bottom &&
-		e0Bottom > e1Top) {
+	if (e0Left <= e1Right &&
+		e0Right >= e1Left &&
+		e0Top <= e1Bottom &&
+		e0Bottom >= e1Top) {
 		return true;
 	}
 	else {
@@ -119,33 +119,36 @@ void Collisionhandler::checkCollisionDirection(Entity *e0, Entity *e1) {
 	float deltaLeftCollision = e0Right - e1Left;
 	float deltaRightCollision = e1Right - e0Left;
 
+	
+
 	// Checks if deltaTopCollision is the smallest value, 
 	if (deltaTopCollision < deltaBottomCollision && deltaTopCollision < deltaLeftCollision && deltaTopCollision < deltaRightCollision) {
 		// Top collision, e0 collided with e1's top edge
-		e0->move(sf::Vector2f(0, -1));
+		// lallen e0->move(sf::Vector2f(0, -1));
 	}
 	// Checks if deltaBottomCollision is the smallest value
 	if (deltaBottomCollision < deltaTopCollision && deltaBottomCollision < deltaLeftCollision && deltaBottomCollision < deltaRightCollision) {
 		// Bottom collision
-		e0->move(sf::Vector2f(0, 1));
+		// lallen e0->move(sf::Vector2f(0, 1));
 	}
 	// Checks if deltaLeftCollision is the smallest value
 	if (deltaLeftCollision < deltaRightCollision && deltaLeftCollision < deltaTopCollision && deltaLeftCollision < deltaBottomCollision) {
 		// Left collision
-		e0->move(sf::Vector2f(-1, 0));
+		// lallen e0->move(sf::Vector2f(-1, 0));
 	}
 	// Checks if deltaRightCollision is the smallest value	
 	if (deltaRightCollision < deltaLeftCollision && deltaRightCollision < deltaTopCollision && deltaRightCollision < deltaBottomCollision) {
 		// Right collision
-		e0->move(sf::Vector2f(1, 0));
+		// lallen e0->move(sf::Vector2f(1, 0));
+		
 	}
 }
 
 // Collision between an entity and a terrain
 void Collisionhandler::checkCollisionDirection(Entity *e0, Terrain *e1) {
-	terrainOutline.setSize(sf::Vector2f(e1->getWidth(), e1->getHeight()));
+	/*terrainOutline.setSize(sf::Vector2f(e1->getWidth(), e1->getHeight()));
 	terrainOutline.setPosition(e1->getPos());
-	terrainOutline.setFillColor(sf::Color::Yellow);
+	terrainOutline.setFillColor(sf::Color::Yellow);*/
 
 	float e0Left = e0->getPos().x;
 	float e0Right = e0->getPos().x + e0->getWidth();
@@ -157,45 +160,48 @@ void Collisionhandler::checkCollisionDirection(Entity *e0, Terrain *e1) {
 	float e1Top = e1->getPos().y;
 	float e1Bottom = e1->getPos().y + e1->getHeight();
 
-	line1.setSize(sf::Vector2f(e0->getWidth(), 1));
+	/*line1.setSize(sf::Vector2f(e0->getWidth(), 1));
 	line1.setFillColor(sf::Color::Blue);
 	line1.setPosition(e0Left, e0Bottom);
 
 	line2.setSize(sf::Vector2f(e1->getWidth(), 1));
 	line2.setFillColor(sf::Color::Magenta);
-	line2.setPosition(e1Left, e1Top);
+	line2.setPosition(e1Left, e1Top);*/
 
 	float deltaBottomCollision = e1Bottom - e0Top; // Distance between the enemy's bottom edge and the player's top edge
 	float deltaTopCollision = e0Bottom - e1Top; // Distance between the player's bottom edge and the enemy's top edge
 	float deltaLeftCollision = e0Right - e1Left;
 	float deltaRightCollision = e1Right - e0Left;
 
-	std::cout << "deltaTop: " << deltaTopCollision << " deltaBottom: " << deltaBottomCollision << " deltaLeft: " << deltaLeftCollision << " deltaRight: " << deltaRightCollision << std::endl;
-
+	//std::cout << "deltaTop: " << deltaTopCollision << " deltaBottom: " << deltaBottomCollision << " deltaLeft: " << deltaLeftCollision << " deltaRight: " << deltaRightCollision << std::endl;
 
 	// Checks if deltaTopCollision is the smallest value
 	if (deltaTopCollision < deltaBottomCollision && deltaTopCollision < deltaLeftCollision && deltaTopCollision < deltaRightCollision) {
 		// Top collision, e0 collided with e1's top edge
-		e0->move(sf::Vector2f(0, -1 * deltaTopCollision));
+		// lallen e0->move(sf::Vector2f(0, -1 * deltaTopCollision));
+		e0->terrainCollision(e1, 'b');
 	}
 	// Checks if deltaBottomCollision is the smallest value
 	if (deltaBottomCollision < deltaTopCollision && deltaBottomCollision < deltaLeftCollision && deltaBottomCollision < deltaRightCollision) {
 		// Bottom collision
-		e0->move(sf::Vector2f(0, 1 * deltaBottomCollision));
+		// lallen e0->move(sf::Vector2f(0, 1 * deltaBottomCollision));
+		e0->terrainCollision(e1, 't');
 	}
 	// Checks if deltaLeftCollision is the smallest value
 	if (deltaLeftCollision < deltaRightCollision && deltaLeftCollision < deltaTopCollision && deltaLeftCollision < deltaBottomCollision) {
 		// Left collision
-		e0->move(sf::Vector2f(-1 * deltaLeftCollision, 0));
+		// lallen e0->move(sf::Vector2f(-1 * deltaLeftCollision, 0));
+		e0->terrainCollision(e1, 'r');
 	}
 	// Checks if deltaRightCollision is the smallest value	
-	if (deltaRightCollision < deltaLeftCollision && deltaRightCollision < deltaTopCollision && deltaRightCollision < deltaBottomCollision) {
+	if (deltaRightCollision < deltaLeftCollision && deltaRightCollision < deltaTopCollision && deltaRightCollision < deltaBottomCollision ) {
 		// Right collision
-		e0->move(sf::Vector2f(1 * deltaRightCollision, 0));
+		// lallen e0->move(sf::Vector2f(1 * deltaRightCollision, 0));
+		e0->terrainCollision(e1, 'l');
 	}
-	playerOutline.setSize(sf::Vector2f(e0->getWidth(), e0->getHeight()));
+	/*playerOutline.setSize(sf::Vector2f(e0->getWidth(), e0->getHeight()));
 	playerOutline.setPosition(e0->getPos());
-	playerOutline.setFillColor(sf::Color::Red);
+	playerOutline.setFillColor(sf::Color::Red);*/
 }
 
 void Collisionhandler::renderCollision(sf::RenderWindow &window) {

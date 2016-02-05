@@ -1,6 +1,8 @@
 #include "GameLoop.h"
 #include <iostream>
 
+
+
 GameLoop::GameLoop():
 mCurrentMap("resources/maps/mMap0.txt"),
 mWindow(sf::VideoMode::getDesktopMode(), "Livia 2.0.2 V.2"),
@@ -60,6 +62,7 @@ void GameLoop::run(){
 	mAmbienceSound.play();
 
 	int clickOnce = 0;
+	
 
 	sf::Clock clock;
 

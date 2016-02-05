@@ -6,6 +6,7 @@
 #include "Collisionhandler.h"
 #include "MapGenerator.h"
 #include "Toolbox.h"
+#include "Animations.h"
 
 class GameRun : public GameState{
 public:

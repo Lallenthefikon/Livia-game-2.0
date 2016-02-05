@@ -1,6 +1,7 @@
 #pragma once
 
 #include <SFML\Graphics.hpp>
+#include <Box2D\Box2D.h>
 
 struct Toolbox{
 	enum TEXTUREKEY { WORMTEXTURE, BLOCK0TEXTURE, PLAYERTEXTURE, TILETEXTURE, EDITORMENY };

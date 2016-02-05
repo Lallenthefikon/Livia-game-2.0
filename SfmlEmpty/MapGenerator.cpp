@@ -9,8 +9,9 @@ mEntityhandler(&Entityhandler::getInstance()){
 MapGenerator::~MapGenerator(){
 }
 
-MapGenerator& MapGenerator::getInstance(){
+MapGenerator& MapGenerator::getInstance(b2World* world){
 	static MapGenerator mapGenerator;
+	mapGenerator.mWorld = world;
 	return mapGenerator;
 }
 
@@ -103,18 +104,18 @@ void MapGenerator::readEntityfile(std::string &filename){
 // Create entities
 
 void MapGenerator::createWorm(sf::Vector2f pos){
-	mEntityhandler->addEntity(Factory::createWorm(pos));
+	mEntityhandler->addEntity(Factory::createWorm(pos, mWorld));
 }
 
 void MapGenerator::createPlayer(sf::Vector2f pos){
-	mEntityhandler->addEntity(Factory::createPlayer(pos));
+	mEntityhandler->addEntity(Factory::createPlayer(pos, mWorld));
 }
 
 
 // Create terrains
 
 void MapGenerator::createBlock0(sf::Vector2f pos, char type){
-	mTerrainhandler->addTerrain(Factory::createBlock0(pos, type));
+	mTerrainhandler->addTerrain(Factory::createBlock0(pos, type, mWorld));
 }
 
 sf::Vector2f MapGenerator::readPosition(std::string line){

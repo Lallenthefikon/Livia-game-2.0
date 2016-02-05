@@ -1,17 +1,22 @@
 #include "Block0.h"
 
-Block0::Block0(sf::Vector2f pos, char type){
+Block0::Block0(sf::Vector2f pos, char type, b2World* world){
 	Block0::setTexture(type);
+	
 	mSprite.setTexture(mTexture);
 	mSpriteOffset = sf::Vector2f(mSprite.getLocalBounds().width / 2, mSprite.getLocalBounds().height / 2);
 	mSprite.setPosition(pos - mSpriteOffset);
+
+	mTerrainBodyDef.type = b2_staticBody;
+	mTerrainBodyDef.position.Set(mSprite.getPosition().x, mSprite.getPosition().y);
+
 }
 
 Block0::~Block0(){
 }
 
-Terrain* Block0::createBlock0(sf::Vector2f pos, char type){
-	return new Block0(pos, type);
+Terrain* Block0::createBlock0(sf::Vector2f pos, char type, b2World* world){
+	return new Block0(pos, type, world);
 }
 
 void Block0::render(sf::RenderWindow &window){

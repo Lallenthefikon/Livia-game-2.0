@@ -44,5 +44,7 @@ private:
 	sf::Texture mMenyTexture;
 
 	sf::Sprite mMenySprite;
+
+	b2World* mWorld;
 };
 

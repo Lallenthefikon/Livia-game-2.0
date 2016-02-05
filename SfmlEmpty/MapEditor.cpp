@@ -10,8 +10,9 @@ mInsertType(MapEditorMeny::BLOCK0),
 mCurrentMap(mapName),
 mMaploader(MapEditMaploader::getInstance()),
 mMeny(MapEditorMeny::getInstance()),
-mCamera(){
-
+mCamera(),
+mWorld(){
+	mWorld->SetGravity(b2Vec2(0, 0));
 	Toolbox::loadTextures();
 	mTileTexture.loadFromImage(Toolbox::getTexture(Toolbox::TILETEXTURE));
 	MapEditor::loadMap();
@@ -140,7 +141,7 @@ void MapEditor::render(sf::RenderWindow &window){
 }
 
 void MapEditor::createBlock0(sf::Vector2f mousePos){
-	mTerrains.push_back(Factory::createBlock0(mousePos,'a'));
+	mTerrains.push_back(Factory::createBlock0(mousePos,'a', mWorld));
 }
 
 void MapEditor::createPlayer(sf::Vector2f mousePos){
@@ -149,18 +150,18 @@ void MapEditor::createPlayer(sf::Vector2f mousePos){
 	for (Entities::size_type i = 0; i < mEntities.size(); i++){
 		if (mEntities[i]->getType() == Entity::PLAYER){
 			delete mEntities[i];
-			mEntities[i] = Factory::createPlayer(mousePos);
+			mEntities[i] = Factory::createPlayer(mousePos, mWorld);
 			playerFound = true;
 			break;
 		}
 	}
 	if (!playerFound)
-		mEntities.push_back(Factory::createPlayer(mousePos));
+		mEntities.push_back(Factory::createPlayer(mousePos, mWorld));
 	
 }
 
 void MapEditor::createWorm(sf::Vector2f mousePos){
-	mEntities.push_back(Factory::createWorm(mousePos));
+	mEntities.push_back(Factory::createWorm(mousePos, mWorld));
 }
 
 void MapEditor::loadMap(){

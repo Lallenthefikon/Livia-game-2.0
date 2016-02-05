@@ -72,5 +72,7 @@ private:
 
 	// Camera Edit
 	Camera mCamera;
+
+	b2World* mWorld;
 };
 

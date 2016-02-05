@@ -7,7 +7,7 @@
 class MapGenerator{
 public:
 
-	static MapGenerator& getInstance();
+	static MapGenerator& getInstance(b2World* world);
 
 	void loadMap(std::string &mapname);
 
@@ -28,6 +28,8 @@ private:
 	// Pekare till singeltonklasser
 	Terrainhandler *mTerrainhandler;
 	Entityhandler *mEntityhandler;
+
+	b2World* mWorld;
 
 };
 

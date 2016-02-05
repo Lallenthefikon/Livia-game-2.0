@@ -8,7 +8,7 @@ class Block0 : public Terrain{
 public:
 	virtual ~Block0();
 	virtual Terrain::TERRAINTYPE getType(){ return Terrain::BLOCK0; }
-	static Terrain* createBlock0(sf::Vector2f pos, char type);
+	static Terrain* createBlock0(sf::Vector2f pos, char type, b2World* world);
 	virtual void render(sf::RenderWindow &window);
 	virtual void update();
 	virtual sf::Vector2f getPos(){ return mSprite.getPosition(); }
@@ -19,7 +19,7 @@ public:
 	virtual bool isOnScreen(){ return mIsOnScreen; }
 
 private:
-	Block0(sf::Vector2f pos, char type);
+	Block0(sf::Vector2f pos, char type, b2World* world);
 
 	void setTexture(char type);
 
@@ -27,5 +27,8 @@ private:
 	sf::Sprite mSprite;
 	sf::Vector2f mSpriteOffset;
 	bool mIsOnScreen = true;
+	
+	b2BodyDef mTerrainBodyDef;
+	b2Body* mBody;
 };
 

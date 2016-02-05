@@ -35,9 +35,9 @@ void MapEditorMeny::insertObjects(){
 
 	int widthBetween = 140;
 
-	mEntities.push_back(Factory::createPlayer(sf::Vector2f(widthBetween, 100)));
-	mEntities.push_back(Factory::createWorm(sf::Vector2f(widthBetween * 2, 100)));
-	mTerrains.push_back(Factory::createBlock0(sf::Vector2f(widthBetween * 3, 100), 'a'));
+	//mEntities.push_back(Factory::createPlayer(sf::Vector2f(widthBetween, 100), ));
+	//mEntities.push_back(Factory::createWorm(sf::Vector2f(widthBetween * 2, 100)));
+	//mTerrains.push_back(Factory::createBlock0(sf::Vector2f(widthBetween * 3, 100), 'a'));
 }
 
 bool MapEditorMeny::menyClicked(sf::Vector2i mousepos){

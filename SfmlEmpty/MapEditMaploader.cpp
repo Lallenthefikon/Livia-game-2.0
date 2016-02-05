@@ -95,15 +95,15 @@ void MapEditMaploader::clear(){
  }
 
  void MapEditMaploader::createBlock0(sf::Vector2f &pos, char type){
-	 mTerrains.push_back(Factory::createBlock0(pos, type));
+//	 mTerrains.push_back(Factory::createBlock0(pos, type));
  }
 
  void MapEditMaploader::createPlayer(sf::Vector2f &pos){
-	 mEntities.push_back(Factory::createPlayer(pos));
+	// mEntities.push_back(Factory::createPlayer(pos));
  }
 
  void MapEditMaploader::createWorm(sf::Vector2f &pos){
-	 mEntities.push_back(Factory::createWorm(pos));
+	// mEntities.push_back(Factory::createWorm(pos));
  }
 
  sf::Vector2f MapEditMaploader::readPosition(std::string line){

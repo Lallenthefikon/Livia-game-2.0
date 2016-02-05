@@ -1,6 +1,7 @@
 #pragma once
 
 #include <SFML\Graphics.hpp>
+#include <Box2D\Box2D.h>
 
 class Terrain{
 public:
@@ -16,5 +17,7 @@ public:
 	virtual float getHeight() = 0;
 	virtual sf::Sprite getSprite() = 0;
 	virtual bool isOnScreen() = 0;
+	
+	
 };
 

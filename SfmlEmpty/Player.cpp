@@ -4,12 +4,25 @@
 static float timeElapsed = 0.1666666666666667;
 static float jumpVelocity = -375;
 
-Player::Player(sf::Vector2f pos) :
+Player::Player(sf::Vector2f pos, b2World* world) :
 mPlayerSpeed(30),
-mNrofJumpsLeft(3){
+mNrofJumpsLeft(3),
+mWorld(world){
 	mTexture.loadFromImage(Toolbox::getTexture(Toolbox::PLAYERTEXTURE), sf::IntRect(0,0,120,140));
 	mSprite.setTexture(mTexture);
 	mSpriteOffset = sf::Vector2f(mSprite.getGlobalBounds().width / 2, mSprite.getGlobalBounds().height / 2);
+	mSprite.setPosition(pos - mSpriteOffset);
+
+	mEntityBodyDef.type = b2_dynamicBody;
+	mEntityBodyDef.position.Set(2, 2);
+	mEntityBodyDef.angle = 0;
+
+	mBody = mWorld->CreateBody(&mEntityBodyDef);
+
+	mBoxShape.SetAsBox(getWidth(), getHeight());
+	mFixtureDef.shape = &mBoxShape;
+	mFixtureDef.density = 1;
+	mBody->CreateFixture(&mFixtureDef);
 
 	Toolbox::copyPlayerInfo(mSprite);
 }
@@ -18,8 +31,8 @@ mNrofJumpsLeft(3){
 Player::~Player(){
 }
 
-Entity* Player::createPlayer(sf::Vector2f pos){
-	return new Player(pos);
+Entity* Player::createPlayer(sf::Vector2f pos, b2World* world) {
+	return new Player(pos, world);
 }
 
 void Player::render(sf::RenderWindow &window){

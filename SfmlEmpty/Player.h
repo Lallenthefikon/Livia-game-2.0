@@ -8,7 +8,7 @@ class Player : public Entity{
 public:
 	virtual ~Player();
 	virtual Entity::ENTITYTYPE getType(){ return PLAYER; }
-	static Entity* createPlayer(sf::Vector2f pos);
+	static Entity* createPlayer(sf::Vector2f pos, b2World* world);
 	virtual void render(sf::RenderWindow &window);
 	virtual void update();
 	virtual sf::Vector2f getPos(){ return mSprite.getPosition(); }
@@ -20,7 +20,7 @@ public:
 	virtual void addVector(sf::Vector2f &vector);
 	virtual void move(sf::Vector2f &direction);
 private:
-	Player(sf::Vector2f pos);
+	Player(sf::Vector2f pos, b2World* world);
 	void move();
 	float lerp(float goal, float current, float delta);
 	void accelerateUp();
@@ -42,5 +42,11 @@ private:
 	bool mGrounded = true;
 	int mClickOnce = 0, mNrofJumpsLeft;
 	sf::RectangleShape mSpriteOutline;
+
+	b2BodyDef mEntityBodyDef;
+	b2Body* mBody;
+	b2FixtureDef mFixtureDef;
+	b2PolygonShape mBoxShape;
+	b2World* mWorld;
 };
 

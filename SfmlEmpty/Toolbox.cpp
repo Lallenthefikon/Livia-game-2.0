@@ -1,5 +1,7 @@
 #include "Toolbox.h"
 
+static sf::Sprite mPlayerSprite;
+
 // Textures
 static sf::Image mEnemy0sheet;
 static sf::Image mBlock0sheet;
@@ -76,6 +78,10 @@ sf::Vector2f Toolbox::getWindowPos(){
 	return mWindowPos;
 }
 
-//void Toolbox::copyPlayerInfo(Player &player){
-//}
-//static Player& getPlayer();
+void Toolbox::copyPlayerInfo(sf::Sprite &playerSprite){
+	mPlayerSprite = playerSprite;
+}
+
+sf::Sprite Toolbox::getPlayerSprite(){
+	return mPlayerSprite;
+}

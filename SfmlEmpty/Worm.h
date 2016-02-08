@@ -4,6 +4,7 @@
 #include <SFML\System.hpp>
 #include "Toolbox.h"
 #include "Animations.h"
+#include "CollisionFuncs.h"
 
 class Worm : public Entity{
 public:
@@ -25,6 +26,7 @@ public:
 private:
 	Worm(sf::Vector2f pos);
 
+	void lerp();
 	void addSpeed();
 
 	void updateState();
@@ -48,7 +50,8 @@ private:
 	float mMaxSpeed;
 
 	sf::Vector2f mSpriteOffset,
-		mVelocity;
+		mVelocity,
+		mVelocityGoal;
 
 	WORMSTATE mState;
 	bool mIsOnScreen;

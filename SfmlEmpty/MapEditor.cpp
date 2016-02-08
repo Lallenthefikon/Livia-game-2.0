@@ -4,8 +4,8 @@
 #include <sstream>
 
 MapEditor::MapEditor(std::string &mapName) :
-mMapDimensionsTiles(50, 50),
-mTileDimensions(70.f, 70.f),
+mMapDimensionsTiles(500, 50),
+mTileDimensions(120, 120),
 mInsertType(MapEditorMeny::BLOCK0),
 mCurrentMap(mapName),
 mMaploader(MapEditMaploader::getInstance()),
@@ -89,10 +89,14 @@ void MapEditor::update(sf::RenderWindow &window){
 				}
 			}
 		}
+		if (gEvent.type == sf::Event::MouseWheelMoved){
+			mCamera.zoomCameraEDITOR(gEvent);
+		}
 
 		if (gEvent.type == sf::Event::KeyPressed){
 			switch (gEvent.key.code){
 			case sf::Keyboard::S:
+
 				MapEditor::saveMap();
 				break;
 			case sf::Keyboard::Delete:
@@ -141,19 +145,17 @@ void MapEditor::createBlock0(sf::Vector2f mousePos){
 }
 
 void MapEditor::createPlayer(sf::Vector2f mousePos){
-	bool playerFound(false);
-	
-	for (Entities::size_type i = 0; i < mEntities.size(); i++){
-		if (mEntities[i]->getType() == Entity::PLAYER){
-			delete mEntities[i];
-			mEntities[i] = Factory::createPlayer(mousePos);
-			playerFound = true;
-			break;
-		}
+	if (mEntities.empty())
+		Factory::createPlayer(mousePos);
+
+	else if (mEntities[0]->getType() == Entity::PLAYER){
+		delete mEntities[0];
+		mEntities[0] = Factory::createPlayer(mousePos);
 	}
-	if (!playerFound)
-		mEntities.push_back(Factory::createPlayer(mousePos));
-	
+	else{
+		mEntities.push_back(mEntities[0]);
+		mEntities[0] = Factory::createPlayer(mousePos);
+	}
 }
 
 void MapEditor::createWorm(sf::Vector2f mousePos){

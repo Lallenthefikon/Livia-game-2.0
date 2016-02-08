@@ -5,8 +5,9 @@ static const float ANIFramesPerFrame(0.5);
 Worm::Worm(sf::Vector2f pos) :
 mCurrentAnimation(Animations::getWormCrawlingLeftANI()),
 mIsOnScreen(true),
-mSpeed(0.8),
-mMaxSpeed(8){
+mSpeed(70),
+mMaxSpeed(500){
+	mVelocityGoal.x = -mMaxSpeed;
 	mSprite.setTexture(*mCurrentAnimation->at(0));
 	mSpriteOffset = sf::Vector2f(mSprite.getLocalBounds().width / 2, mSprite.getLocalBounds().height / 2);
 	mSprite.setPosition(pos - mSpriteOffset);
@@ -24,8 +25,10 @@ void Worm::render(sf::RenderWindow &window){
 }
 
 void Worm::update(){
+	if (mSprite.getPosition().x < 0)
+		mSprite.setPosition(16000, 0);
 	Worm::addSpeed();
-
+	Worm::lerp();
 	Worm::updateCollision();
 	Worm::updateState();
 	Worm::animate();
@@ -82,11 +85,54 @@ void Worm::terrainCollision(Terrain* terrain, char direction){
 
 // Privates
 
+void Worm::lerp(){
+
+	bool lerpedY(false);
+	bool lerpedX(false);
+
+	float delta = 0.016 *mSpeed;
+	float differenceX = mVelocityGoal.x - mVelocity.x;
+	float differenceY = mVelocityGoal.y - mVelocity.y;
+
+	if (mVelocityGoal.y > 40) {
+		mVelocityGoal.y = 40;
+	}
+
+	// Interpolates the velocity up from stationary
+	if (differenceX > delta) {
+		mVelocity.x += delta;
+		lerpedX = true;
+	}
+	// Interpolates the velocity up from stationary
+	if (differenceY > delta) {
+		mVelocity.y += delta;
+		lerpedY = true;
+	}
+	// Interpolates the velocity down to stationary
+	if (differenceX < -delta) {
+		mVelocity.x += -delta;
+		lerpedX = true;
+	}
+	// Interpolates the velocity down to stationary
+	if (differenceY < -delta) {
+		mVelocity.y += -delta;
+		lerpedY = true;
+	}
+
+	// Max velocity
+
+	if (!lerpedY)
+		mVelocity.y = mVelocityGoal.y;
+	if (!lerpedX)
+		mVelocity.x = mVelocityGoal.x;
+}
+
+
 void Worm::addSpeed(){
-	if (mVelocity.x < mMaxSpeed && mVelocity.x > 0)
+	/*if (mVelocityGoal.x < mMaxSpeed && mVelocityGoal.x > 0)
 		mVelocity.x += mSpeed;
-	if (mVelocity.x > -mMaxSpeed && mVelocity.x <= 0)
-		mVelocity.x -= mSpeed;
+	if (mVelocityGoal.x > -mMaxSpeed && mVelocityGoal.x <= 0)
+		mVelocity.x -= mSpeed;*/
 }
 
 void Worm::updateState(){
@@ -117,29 +163,29 @@ void Worm::updateANI(){
 
 void Worm::updateCollision(){
 	if (mCollisionT){
-		if (!Worm::currentCollisionT()){
+		if (!CollisionFuncs::currentCollisionT(mSprite, mCurrentCollisionT->getSprite())){
 			mCollisionT = false;
 		}
 	}
 	if (mCollisionB){
-		if (!Worm::currentCollisionB()){
+		if (!CollisionFuncs::currentCollisionB(mSprite, mCurrentCollisionB->getSprite())){
 			mCollisionB = false;
 		}
 	}
 	if (mCollisionL){
-		if (!Worm::currentCollisionL()){
+		if (!CollisionFuncs::currentCollisionL(mSprite, mCurrentCollisionL->getSprite())){
 			mCollisionL = false;
 		}
 		else{
-			mVelocity.x = mSpeed;
+			mVelocityGoal.x = mMaxSpeed;
 		}
 	}
 	if (mCollisionR){
-		if (!Worm::currentCollisionR()){
+		if (!CollisionFuncs::currentCollisionR(mSprite, mCurrentCollisionR->getSprite())){
 			mCollisionR = false;
 		}
 		else{
-			mVelocity.x = -mSpeed;
+			mVelocityGoal.x = -mMaxSpeed;
 		}
 	}
 
@@ -165,108 +211,3 @@ void Worm::animate(){
 			mSprite.setTexture(*mCurrentAnimation->at(mAnimationIndex));
 	}
 }
-
-bool Worm::currentCollisionB(){
-
-	float e0Left = this->getPos().x;
-	float e0Right = this->getPos().x + this->getWidth();
-	float e0Top = this->getPos().y;
-	float e0Bottom = this->getPos().y + this->getHeight();
-
-	float e1Left = mCurrentCollisionB->getPos().x;
-	float e1Right = mCurrentCollisionB->getPos().x + mCurrentCollisionB->getWidth();
-	float e1Top = mCurrentCollisionB->getPos().y - 1;
-	float e1Bottom = mCurrentCollisionB->getPos().y + mCurrentCollisionB->getHeight() + 1;
-
-
-	// Has collided if all conditions are met
-	if (e0Left <= e1Right &&
-		e0Right >= e1Left &&
-		e0Top <= e1Bottom &&
-		e0Bottom >= e1Top) {
-		return true;
-	}
-	else {
-		return false;
-	}
-}
-
-bool Worm::currentCollisionT(){
-
-	float e0Left = this->getPos().x;
-	float e0Right = this->getPos().x + this->getWidth();
-	float e0Top = this->getPos().y;
-	float e0Bottom = this->getPos().y + this->getHeight();
-
-	float e1Left = mCurrentCollisionT->getPos().x;
-	float e1Right = mCurrentCollisionT->getPos().x + mCurrentCollisionT->getWidth();
-	float e1Top = mCurrentCollisionT->getPos().y - 1;
-	float e1Bottom = mCurrentCollisionT->getPos().y + mCurrentCollisionT->getHeight() + 1;
-
-
-	// Has collided if all conditions are met
-	if (e0Left <= e1Right &&
-		e0Right >= e1Left &&
-		e0Top <= e1Bottom &&
-		e0Bottom >= e1Top) {
-		return true;
-	}
-	else {
-		return false;
-	}
-}
-
-bool Worm::currentCollisionL(){
-
-	float e0Left = this->getPos().x;
-	float e0Right = this->getPos().x + this->getWidth();
-	float e0Top = this->getPos().y;
-	float e0Bottom = this->getPos().y + this->getHeight();
-
-	float e1Left = mCurrentCollisionL->getPos().x - 1;
-	float e1Right = mCurrentCollisionL->getPos().x + mCurrentCollisionL->getWidth() + 1;
-	float e1Top = mCurrentCollisionL->getPos().y;
-	float e1Bottom = mCurrentCollisionL->getPos().y + mCurrentCollisionL->getHeight();
-
-
-	// Has collided if all conditions are met
-	if (e0Left <= e1Right &&
-		e0Right >= e1Left &&
-		e0Top <= e1Bottom &&
-		e0Bottom >= e1Top) {
-		return true;
-	}
-	else {
-		return false;
-	}
-}
-
-bool Worm::currentCollisionR(){
-
-	float e0Left = this->getPos().x;
-	float e0Right = this->getPos().x + this->getWidth();
-	float e0Top = this->getPos().y;
-	float e0Bottom = this->getPos().y + this->getHeight();
-
-	float e1Left = mCurrentCollisionR->getPos().x - 1;
-	float e1Right = mCurrentCollisionR->getPos().x + mCurrentCollisionR->getWidth() + 1;
-	float e1Top = mCurrentCollisionR->getPos().y;
-	float e1Bottom = mCurrentCollisionR->getPos().y + mCurrentCollisionR->getHeight();
-
-
-	// Has collided if all conditions are met
-	if (e0Left <= e1Right &&
-		e0Right >= e1Left &&
-		e0Top <= e1Bottom &&
-		e0Bottom >= e1Top) {
-		return true;
-	}
-	else {
-		return false;
-	}
-}
-
-
-
-
-

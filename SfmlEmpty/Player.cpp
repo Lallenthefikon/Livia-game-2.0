@@ -17,7 +17,7 @@ mTimer(1),
 // Stats
 mJumpSpeed(-32),
 mMaxSpeed(15),
-mSpeed(1.2){
+mSpeed(70){
 
 	mSprite.setTexture(*mCurrentAnimation->at(0));
 	mSpriteOffset = sf::Vector2f(mSprite.getGlobalBounds().width / 2, mSprite.getGlobalBounds().height / 2);
@@ -26,7 +26,6 @@ mSpeed(1.2){
 }
 
 Player::~Player(){
-
 }
 
 Entity* Player::createPlayer(sf::Vector2f pos){
@@ -40,19 +39,18 @@ void Player::render(sf::RenderWindow &window){
  void Player::update(){
 	
 	Player::playerInput();
-	Player::addFriktion();
+	Player::lerp();
 	Player::updateCollision();
 	Player::updateState();
 	Player::animate();
 
 	mSprite.move(mVelocity);
 
-	// Reset temps
-	mInput = sf::Vector2f(0, 0);
+	
 }
 
 void Player::addVector(sf::Vector2f &vector){
-	mVelocity += vector;
+	mVelocityGoal += vector;
 }
 
 void Player::entityCollision(Entity* entity, char direction){
@@ -105,40 +103,66 @@ void Player::playerInput(){
 	// Jump
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
 		if (mState != JUMPING && mState != FALLING){
-			mInput.y += mJumpSpeed;
+			mVelocity.y = mJumpSpeed;
 		}
 	}
 
 	// Left and right
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-		if (mVelocity.x > mMaxSpeed * -1)
-			mInput.x -= mSpeed;
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+			mVelocityGoal.x = -mMaxSpeed;
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+			mVelocityGoal.x = mMaxSpeed;
+		}
 	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-		if (mVelocity.x < mMaxSpeed)
-			mInput.x += mSpeed;
-	}
-	Player::addVector(mInput);
+ else
+	mVelocityGoal.x = 0;
+
 }
 
-void Player::addFriktion(){
-	if (mVelocity.x < 0){
-		if (mVelocity.x >0){
-			mVelocity.x = 0;
-		}
-		else{
-			Player::addVector(sf::Vector2f(FRIKTION, 0));
-		}
+void Player::lerp(){
+
+	bool lerpedY(false);
+	bool lerpedX(false);
+	
+	float delta = 0.016 *mSpeed ;
+	float differenceX = mVelocityGoal.x - mVelocity.x;
+	float differenceY = mVelocityGoal.y - mVelocity.y;
+
+ 	if (mVelocityGoal.y > 40) {
+		mVelocityGoal.y = 40;
 	}
-	if (mVelocity.x > 0){
-		if (mVelocity.x < FRIKTION){
-			mVelocity.x = 0;
-		}
-		else{
-			Player::addVector(sf::Vector2f(-FRIKTION, 0));
-		}
+
+	// Interpolates the velocity up from stationary
+	if (differenceX > delta) {
+		mVelocity.x += delta;
+		lerpedX = true;
 	}
+	// Interpolates the velocity up from stationary
+	if (differenceY > delta) {
+		mVelocity.y += delta;
+		lerpedY = true;
+	}
+	// Interpolates the velocity down to stationary
+	if (differenceX < -delta) {
+		mVelocity.x += -delta;
+		lerpedX = true;
+	}
+	// Interpolates the velocity down to stationary
+	if (differenceY < -delta) {
+		mVelocity.y += -delta;
+		lerpedY = true;
+	}
+
+	// Max velocity
+
+	if (!lerpedY)
+		mVelocity.y = mVelocityGoal.y;
+	if (!lerpedX)
+		mVelocity.x = mVelocityGoal.x;
 }
+	
 	
 void Player::updateState(){
 

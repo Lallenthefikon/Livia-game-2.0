@@ -35,7 +35,7 @@ private:
 
 
 	void playerInput();
-	void addFriktion();
+	void lerp();
 
 	void updateState();
 	void updateANI();
@@ -60,9 +60,9 @@ private:
 	float mTimer;
 
 	sf::Vector2f
-		mInput,
 		mVelocity,
-		mSpriteOffset;
+		mSpriteOffset,
+		mVelocityGoal;
 	
 	bool mIsOnScreen;
 	PLAYERSTATE mState;

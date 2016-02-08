@@ -57,6 +57,7 @@ private:
 	char mCollisionB;
 	char mCollisionL;
 	char mCollisionR;
+
 	Terrain* mCurrentCollisionB;
 	Terrain* mCurrentCollisionT;
 	Terrain* mCurrentCollisionL;
